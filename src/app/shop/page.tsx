@@ -1,71 +1,21 @@
-"use client";
+import { getProducts } from "@/lib/store";
+import ShopContent from "./ShopContent";
 
-import { Suspense, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
-import ProductGrid from "@/components/ProductGrid";
-import { categories, products } from "@/lib/products";
-import { Leaf } from "lucide-react";
+export const metadata = {
+  title: "Shop",
+  description:
+    "Browse our curated collection of premium cactus and succulent seeds.",
+};
 
-type CategoryKey = "all" | "cacti" | "succulents" | "rare" | "tools";
+export default async function ShopPage() {
+  const products = await getProducts();
+  const categories: { slug: string; name: string }[] = [
+    { slug: "cacti", name: "Cactus Seeds" },
+    { slug: "succulents", name: "Succulent Seeds" },
+    { slug: "rare", name: "Rare & Exotic" },
+    { slug: "tools", name: "Growing Tools" },
+  ];
 
-const validKeys: CategoryKey[] = ["all", "cacti", "succulents", "rare", "tools"];
-
-function ShopContent() {
-  const searchParams = useSearchParams();
-  const param = searchParams.get("category") as CategoryKey;
-  const state: CategoryKey = validKeys.includes(param) ? param : "all";
-
-  const filtered = useMemo(
-    () =>
-      state === "all"
-        ? products
-        : products.filter((p) => p.category === state),
-    [state]
-  );
-
-  return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="flex flex-wrap items-center gap-3">
-        {[
-          { key: "all" as const, label: "All Products" },
-          ...categories.map((c) => ({ key: c.slug as CategoryKey, label: c.name })),
-        ].map((cat) => (
-          <a
-            key={cat.key}
-            href={`/shop${cat.key === "all" ? "" : `?category=${cat.key}`}`}
-            className={`rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
-              state === cat.key
-                ? "bg-sage-700 text-white"
-                : "border border-stone-200 bg-white text-stone-700 hover:border-sage-500 hover:text-sage-700"
-            }`}
-          >
-            {cat.label}
-          </a>
-        ))}
-      </div>
-
-      <div className="mt-8 flex items-center justify-between">
-        <p className="text-sm text-stone-500">
-          Showing {filtered.length} {filtered.length === 1 ? "product" : "products"}
-        </p>
-        <p className="flex items-center gap-1.5 text-sm text-stone-400">
-          <Leaf className="h-4 w-4" />
-          Free shipping over $50
-        </p>
-      </div>
-
-      {filtered.length > 0 ? (
-        <ProductGrid products={filtered} />
-      ) : (
-        <div className="py-20 text-center text-stone-500">
-          No products in this category yet.
-        </div>
-      )}
-    </div>
-  );
-}
-
-export default function ShopPage() {
   return (
     <main className="flex-1">
       <div className="border-b border-stone-200 bg-white">
@@ -77,9 +27,7 @@ export default function ShopPage() {
           </p>
         </div>
       </div>
-      <Suspense fallback={<div className="py-20 text-center text-stone-500">Loading...</div>}>
-        <ShopContent />
-      </Suspense>
+      <ShopContent products={products} categories={categories} />
     </main>
   );
 }

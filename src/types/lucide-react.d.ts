@@ -4,22 +4,36 @@ declare module "lucide-react" {
     size?: number | string;
   }
   export type Icon = ComponentType<LucideProps>;
+  export const AlertTriangle: Icon;
+  export const ArrowLeft: Icon;
   export const ArrowRight: Icon;
   export const BookOpen: Icon;
   export const Check: Icon;
   export const CheckCircle2: Icon;
+  export const ChevronDown: Icon;
   export const ChevronRight: Icon;
+  export const ChevronUp: Icon;
   export const Droplets: Icon;
   export const FlaskConical: Icon;
+  export const KeyRound: Icon;
   export const Leaf: Icon;
+  export const Loader2: Icon;
+  export const Lock: Icon;
+  export const LogIn: Icon;
+  export const LogOut: Icon;
   export const Mail: Icon;
   export const MapPin: Icon;
   export const Menu: Icon;
+  export const MessageCircle: Icon;
   export const Minus: Icon;
+  export const Package: Icon;
   export const PackageCheck: Icon;
+  export const PackageOpen: Icon;
+  export const Pencil: Icon;
   export const Phone: Icon;
   export const Plus: Icon;
   export const RotateCcw: Icon;
+  export const Save: Icon;
   export const SearchX: Icon;
   export const Send: Icon;
   export const ShieldCheck: Icon;
@@ -27,7 +41,9 @@ declare module "lucide-react" {
   export const Sprout: Icon;
   export const Star: Icon;
   export const Sun: Icon;
+  export const Tags: Icon;
   export const Trash2: Icon;
   export const Truck: Icon;
+  export const User: Icon;
   export const X: Icon;
 }

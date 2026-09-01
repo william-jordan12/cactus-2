@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { products, type Product } from "@/lib/products";
+import { products as staticProducts, type Product } from "@/lib/products";
 
 export interface CartItem {
   slug: string;
@@ -36,6 +36,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [catalog, setCatalog] = useState<Product[]>(staticProducts);
 
   useEffect(() => {
     try {
@@ -47,6 +48,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
       // ignore invalid stored data
     }
     setLoaded(true);
+
+    // Resolve cart item details against the live catalog (DB via API,
+    // falling back to the bundled seed data).
+    fetch("/api/products")
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data.products) && data.products.length > 0) {
+          setCatalog(data.products);
+        }
+      })
+      .catch(() => {
+        // keep static catalog
+      });
   }, []);
 
   useEffect(() => {
@@ -93,11 +107,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () =>
       items
         .map((i) => {
-          const product = products.find((p) => p.slug === i.slug);
+          const product =
+            catalog.find((p) => p.slug === i.slug) ??
+            staticProducts.find((p) => p.slug === i.slug);
           return product ? { product, qty: i.qty } : null;
         })
         .filter((x): x is { product: Product; qty: number } => x !== null),
-    [items]
+    [items, catalog]
   );
 
   const subtotal = useMemo(

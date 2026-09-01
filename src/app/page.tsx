@@ -1,11 +1,11 @@
 import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import { SectionHeading } from "@/components/SectionHeading";
-import { getFeaturedProducts } from "@/lib/products";
+import { getFeaturedProducts } from "@/lib/store";
 import { Leaf, ShieldCheck, Sprout, PackageCheck, Star } from "lucide-react";
 
-export default function Home() {
-  const featured = getFeaturedProducts();
+export default async function Home() {
+  const featured = await getFeaturedProducts();
 
   return (
     <main className="flex-1">

@@ -121,9 +121,13 @@ export default function CartDrawer() {
               <p className="mb-4 text-xs text-stone-400">
                 Shipping and taxes calculated at checkout.
               </p>
-              <button className="w-full rounded-lg bg-terracotta-600 py-3 font-semibold text-white transition-colors hover:bg-terracotta-700">
+              <Link
+                href="/checkout"
+                onClick={() => setCartOpen(false)}
+                className="flex w-full items-center justify-center rounded-lg bg-terracotta-600 py-3 font-semibold text-white transition-colors hover:bg-terracotta-700"
+              >
                 Proceed to Checkout
-              </button>
+              </Link>
               <button
                 onClick={clearCart}
                 className="mt-3 w-full text-center text-sm text-stone-400 hover:text-red-500"
