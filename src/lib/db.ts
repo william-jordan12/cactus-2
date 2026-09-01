@@ -87,6 +87,11 @@ const SCHEMA_SQL = [
     price NUMERIC(10,2) NOT NULL,
     qty INTEGER NOT NULL
   )`,
+  `CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT now()
+  )`,
 ];
 
 let initPromise: Promise<void> | null = null;
@@ -102,6 +107,7 @@ export async function initDb(): Promise<void> {
         }
         await seedAdmin(client);
         await seedCategoriesAndProducts(client);
+        await seedSettings(client);
       } finally {
         client.release();
       }
@@ -117,6 +123,21 @@ async function seedAdmin(client: PoolClient) {
      ON CONFLICT (email) DO NOTHING`,
     [env.adminEmail, hashPassword(env.adminInitialPassword)]
   );
+}
+
+async function seedSettings(client: PoolClient) {
+  const defaults = [
+    ["whatsapp", env.adminWhatsApp],
+    ["contact_email", env.contactEmail],
+  ] as const;
+  for (const [key, value] of defaults) {
+    if (!value) continue;
+    await client.query(
+      `INSERT INTO settings (key, value) VALUES ($1, $2)
+       ON CONFLICT (key) DO NOTHING`,
+      [key, value]
+    );
+  }
 }
 
 async function seedCategoriesAndProducts(client: PoolClient) {

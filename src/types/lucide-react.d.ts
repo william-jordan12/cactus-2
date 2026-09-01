@@ -36,6 +36,7 @@ declare module "lucide-react" {
   export const Save: Icon;
   export const SearchX: Icon;
   export const Send: Icon;
+  export const Settings: Icon;
   export const ShieldCheck: Icon;
   export const ShoppingBag: Icon;
   export const Sprout: Icon;

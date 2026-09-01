@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPool, initDb } from "@/lib/db";
 import { getSessionAdmin } from "@/lib/auth";
-import { env } from "@/lib/env";
+import { getSettings } from "@/lib/settings";
 
 export const dynamic = "force-dynamic";
 
@@ -55,6 +55,14 @@ export async function POST(req: Request) {
     }
 
     const pool = getPool();
+
+    const settings = await getSettings();
+    if (method === "whatsapp" && !settings.whatsapp) {
+      return NextResponse.json(
+        { error: "WhatsApp checkout is not available yet." },
+        { status: 400 }
+      );
+    }
 
     const slugs = items.map((i) => i.slug);
     const productResult = await pool.query(
@@ -144,13 +152,13 @@ export async function POST(req: Request) {
     let deliveryUrl: string;
     if (method === "whatsapp") {
       const text = message.replace(/%0A/g, "\n");
-      deliveryUrl = `https://wa.me/${env.adminWhatsApp}?text=${encodeURIComponent(text)}`;
+      deliveryUrl = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(text)}`;
     } else {
       const subject = encodeURIComponent(`New order ${reference} from ${name}`);
       const bodyText = encodeURIComponent(
         message.replace(/%0A/g, "\n").replace(/\*/g, "")
       );
-      deliveryUrl = `mailto:${env.contactEmail}?subject=${subject}&body=${bodyText}`;
+      deliveryUrl = `mailto:${settings.contactEmail}?subject=${subject}&body=${bodyText}`;
     }
 
     return NextResponse.json({

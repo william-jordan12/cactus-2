@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useEffect } from "react";
 import {
   ShoppingBag,
   User,
@@ -18,6 +19,7 @@ import ProductImage from "@/components/ProductImage";
 
 export default function CheckoutPage() {
   const { cartDetails, subtotal, clearCart } = useCart();
+  const [whatsappAvailable, setWhatsappAvailable] = useState(true);
   const [method, setMethod] = useState<"email" | "whatsapp">("whatsapp");
   const [form, setForm] = useState({
     customerName: "",
@@ -31,6 +33,19 @@ export default function CheckoutPage() {
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [error, setError] = useState("");
   const [reference, setReference] = useState("");
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((r) => r.json().catch(() => ({})))
+      .then((data) => {
+        const hasWhatsApp = Boolean(data.settings?.whatsapp);
+        setWhatsappAvailable(hasWhatsApp);
+        if (!hasWhatsApp) setMethod("email");
+      })
+      .catch(() => {
+        setWhatsappAvailable(true);
+      });
+  }, []);
 
   function update(field: keyof typeof form, value: string) {
     setForm((f) => ({ ...f, [field]: value }));
@@ -211,23 +226,25 @@ export default function CheckoutPage() {
             <div className="mt-6 rounded-2xl border border-stone-200 bg-white p-6">
               <h2 className="text-lg font-semibold text-stone-900">Send My Order Via</h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <button
-                  type="button"
-                  onClick={() => setMethod("whatsapp")}
-                  className={`flex items-center gap-3 rounded-xl border-2 p-4 text-left transition-colors ${
-                    method === "whatsapp"
-                      ? "border-sage-600 bg-sage-50"
-                      : "border-stone-200 hover:border-stone-300"
-                  }`}
-                >
-                  <MessageCircle className="h-6 w-6 text-sage-600" />
-                  <div>
-                    <p className="font-semibold text-stone-900">WhatsApp</p>
-                    <p className="text-sm text-stone-500">
-                      Opens WhatsApp with your order
-                    </p>
-                  </div>
-                </button>
+                {whatsappAvailable && (
+                  <button
+                    type="button"
+                    onClick={() => setMethod("whatsapp")}
+                    className={`flex items-center gap-3 rounded-xl border-2 p-4 text-left transition-colors ${
+                      method === "whatsapp"
+                        ? "border-sage-600 bg-sage-50"
+                        : "border-stone-200 hover:border-stone-300"
+                    }`}
+                  >
+                    <MessageCircle className="h-6 w-6 text-sage-600" />
+                    <div>
+                      <p className="font-semibold text-stone-900">WhatsApp</p>
+                      <p className="text-sm text-stone-500">
+                        Opens WhatsApp with your order
+                      </p>
+                    </div>
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => setMethod("email")}
@@ -246,6 +263,11 @@ export default function CheckoutPage() {
                   </div>
                 </button>
               </div>
+              {!whatsappAvailable && (
+                <p className="mt-3 text-sm text-stone-400">
+                  WhatsApp checkout is not available yet — use email instead.
+                </p>
+              )}
             </div>
 
             {error && (

@@ -7,6 +7,7 @@ import {
   Tags,
   ShoppingBag,
   KeyRound,
+  Settings,
   LogOut,
   Loader2,
 } from "lucide-react";
@@ -14,14 +15,16 @@ import ProductsManager from "./ProductsManager";
 import CategoriesManager from "./CategoriesManager";
 import OrdersManager from "./OrdersManager";
 import ChangePasswordForm from "./ChangePasswordForm";
+import SettingsForm from "./SettingsForm";
 
-type Tab = "products" | "categories" | "orders" | "password";
+type Tab = "products" | "categories" | "orders" | "password" | "settings";
 
 const tabs: { key: Tab; label: string; icon: typeof Package }[] = [
   { key: "products", label: "Products", icon: Package },
   { key: "categories", label: "Categories", icon: Tags },
   { key: "orders", label: "Orders", icon: ShoppingBag },
   { key: "password", label: "Change Password", icon: KeyRound },
+  { key: "settings", label: "Settings", icon: Settings },
 ];
 
 export default function AdminDashboard() {
@@ -102,6 +105,7 @@ export default function AdminDashboard() {
           {tab === "categories" && <CategoriesManager />}
           {tab === "orders" && <OrdersManager />}
           {tab === "password" && <ChangePasswordForm />}
+          {tab === "settings" && <SettingsForm />}
         </div>
       </div>
     </div>
