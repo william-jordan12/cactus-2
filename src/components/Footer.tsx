@@ -58,6 +58,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/reviews" className="hover:text-white">
+                  Customer Reviews
+                </Link>
+              </li>
+              <li>
                 <Link href="/about#growing-guides" className="hover:text-white">
                   Growing Guides
                 </Link>
@@ -65,11 +70,6 @@ export default function Footer() {
               <li>
                 <Link href="/contact" className="hover:text-white">
                   Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop" className="hover:text-white">
-                  All Products
                 </Link>
               </li>
             </ul>

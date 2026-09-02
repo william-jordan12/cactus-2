@@ -14,6 +14,7 @@ declare module "lucide-react" {
   export const ChevronRight: Icon;
   export const ChevronUp: Icon;
   export const Droplets: Icon;
+  export const Filter: Icon;
   export const FlaskConical: Icon;
   export const KeyRound: Icon;
   export const Leaf: Icon;
@@ -43,6 +44,7 @@ declare module "lucide-react" {
   export const Star: Icon;
   export const Sun: Icon;
   export const Tags: Icon;
+  export const ThumbsUp: Icon;
   export const Trash2: Icon;
   export const Truck: Icon;
   export const User: Icon;

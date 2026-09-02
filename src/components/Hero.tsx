@@ -5,8 +5,8 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-sage-100 via-cream to-terracotta-100" />
-      <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-sage-200/40 blur-3xl" />
-      <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-terracotta-200/30 blur-3xl" />
+      <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-sage-200/40 blur-3xl animate-float" />
+      <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-terracotta-200/30 blur-3xl animate-float" style={{ animationDelay: "1.5s" }} />
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
         <div className="flex items-center gap-2 rounded-full border border-sage-300 bg-white/70 px-4 py-1.5 text-sm font-medium text-sage-800 backdrop-blur">

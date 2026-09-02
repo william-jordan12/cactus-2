@@ -8,7 +8,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-shadow hover:shadow-lg">
+    <div className="group hover-lift flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-shadow hover:shadow-lg">
       <Link href={`/product/${product.slug}`} className="relative block">
         <ProductImage
           category={product.category}
@@ -16,7 +16,7 @@ export default function ProductCard({ product }: { product: Product }) {
           className="h-56 w-full transition-transform duration-300 group-hover:scale-105"
         />
         {product.category === "rare" && (
-          <span className="absolute left-3 top-3 rounded-full bg-terracotta-600 px-3 py-1 text-xs font-semibold text-white">
+          <span className="badge-pulse absolute left-3 top-3 rounded-full bg-terracotta-600 px-3 py-1 text-xs font-semibold text-white">
             Rare
           </span>
         )}

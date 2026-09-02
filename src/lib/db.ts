@@ -92,6 +92,18 @@ const SCHEMA_SQL = [
     value TEXT NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT now()
   )`,
+  `CREATE TABLE IF NOT EXISTS reviews (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    product_slug TEXT NOT NULL REFERENCES products(slug) ON DELETE CASCADE,
+    customer_name TEXT NOT NULL,
+    location TEXT DEFAULT '',
+    rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    title TEXT NOT NULL,
+    body TEXT NOT NULL,
+    verified BOOLEAN DEFAULT false,
+    helpful INTEGER DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT now()
+  )`,
 ];
 
 let initPromise: Promise<void> | null = null;

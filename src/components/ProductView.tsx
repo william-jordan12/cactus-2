@@ -9,8 +9,10 @@ import {
   Truck,
   ShieldCheck,
   RotateCcw,
+  CheckCircle2,
 } from "lucide-react";
 import type { Product } from "@/lib/products";
+import { getReviewsForProduct } from "@/lib/reviews";
 import { useCart } from "@/context/CartContext";
 import ProductImage from "./ProductImage";
 import ProductGrid from "./ProductGrid";
@@ -23,6 +25,7 @@ export default function ProductView({
   related: Product[];
 }) {
   const { addToCart } = useCart();
+  const productReviews = getReviewsForProduct(product.slug);
 
   return (
     <main className="flex-1">
@@ -163,6 +166,63 @@ export default function ProductView({
               </Link>
             </div>
             <ProductGrid products={related} columns={4} />
+          </section>
+        )}
+
+        {productReviews.length > 0 && (
+          <section className="mt-20">
+            <h2 className="mb-8 text-2xl font-bold text-stone-900">
+              Customer Reviews ({productReviews.length})
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {productReviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="rounded-2xl border border-stone-200 bg-white p-6"
+                >
+                  <div className="flex items-center gap-0.5 text-amber-500">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 ${
+                          i < review.rating
+                            ? "fill-amber-500"
+                            : "fill-stone-200 text-stone-200"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <h3 className="mt-2 font-semibold text-stone-900">
+                    {review.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                    {review.body}
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 border-t border-stone-100 pt-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sage-100 text-xs font-bold text-sage-700">
+                      {review.customerName.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-stone-900">
+                        {review.customerName}
+                        {review.verified && (
+                          <CheckCircle2 className="ml-1 inline h-3 w-3 text-sage-600" />
+                        )}
+                      </p>
+                      <p className="text-xs text-stone-500">{review.location}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-center">
+              <Link
+                href="/reviews"
+                className="text-sm font-semibold text-sage-700 hover:text-sage-800"
+              >
+                Read All Reviews →
+              </Link>
+            </div>
           </section>
         )}
       </div>

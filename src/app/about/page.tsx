@@ -1,31 +1,34 @@
 import Link from "next/link";
 import { Leaf, Sprout, BookOpen, FlaskConical, Sun, Droplets } from "lucide-react";
+import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 export default function AboutPage() {
   return (
     <main className="flex-1">
       <section className="border-b border-stone-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-terracotta-600">
-              Our Story
-            </p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
-              Growing Desert Passion, One Seed at a Time
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-stone-600">
-              Saguaro Seed Vault began in a small Tucson greenhouse with a
-              simple belief: everyone deserves to grow something extraordinary.
-              Today, we've grown into a trusted source for rare and beautiful
-              cactus and succulent seeds, shipped to growers in over 40
-              countries.
-            </p>
-          </div>
+          <AnimateOnScroll>
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-widest text-terracotta-600">
+                Our Story
+              </p>
+              <h1 className="mt-2 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
+                Growing Desert Passion, One Seed at a Time
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-stone-600">
+                Saguaro Seed Vault began in a small Tucson greenhouse with a
+                simple belief: everyone deserves to grow something extraordinary.
+                Today, we&apos;ve grown into a trusted source for rare and beautiful
+                cactus and succulent seeds, shipped to growers in over 40
+                countries.
+              </p>
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-10 md:grid-cols-3 stagger-children">
           {[
             {
               icon: Leaf,
@@ -43,7 +46,7 @@ export default function AboutPage() {
               desc: "We work only with ethical, sustainable growers. Rare species are propagated responsibly, and we never contribute to wild population endangerment.",
             },
           ].map((item) => (
-            <div key={item.title} className="rounded-2xl border border-stone-200 bg-white p-8">
+            <div key={item.title} className="hover-lift rounded-2xl border border-stone-200 bg-white p-8">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-sage-100 text-sage-700">
                 <item.icon className="h-7 w-7" />
               </div>
@@ -56,15 +59,17 @@ export default function AboutPage() {
 
       <section id="growing-guides" className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold text-stone-900">Growing Guides</h2>
-            <p className="mt-4 text-lg text-stone-600">
-              The essentials for turning a tiny seed into a thriving desert plant.
-            </p>
-          </div>
+          <AnimateOnScroll>
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-bold text-stone-900">Growing Guides</h2>
+              <p className="mt-4 text-lg text-stone-600">
+                The essentials for turning a tiny seed into a thriving desert plant.
+              </p>
+            </div>
+          </AnimateOnScroll>
 
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            <div className="rounded-2xl border border-stone-200 bg-stone-50 p-8">
+          <div className="mt-12 grid gap-8 md:grid-cols-3 stagger-children">
+            <div className="hover-lift rounded-2xl border border-stone-200 bg-stone-50 p-8">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600">
                 <FlaskConical className="h-6 w-6" />
               </div>
@@ -77,12 +82,12 @@ export default function AboutPage() {
                 but not waterlogged.
               </p>
             </div>
-            <div className="rounded-2xl border border-stone-200 bg-stone-50 p-8">
+            <div className="hover-lift rounded-2xl border border-stone-200 bg-stone-50 p-8">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600">
                 <Sun className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-semibold text-stone-900">
-                Light & Location
+                Light &amp; Location
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-stone-600">
                 Provide bright, indirect light while seedlings establish.
@@ -90,7 +95,7 @@ export default function AboutPage() {
                 windowsill is ideal once plants mature.
               </p>
             </div>
-            <div className="rounded-2xl border border-stone-200 bg-stone-50 p-8">
+            <div className="hover-lift rounded-2xl border border-stone-200 bg-stone-50 p-8">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600">
                 <Droplets className="h-6 w-6" />
               </div>
@@ -104,15 +109,17 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="mt-10 text-center">
-            <a
-              href="/shop"
-              className="inline-flex items-center rounded-lg bg-sage-700 px-8 py-3.5 font-semibold text-white transition-colors hover:bg-sage-800"
-            >
-              <BookOpen className="mr-2 h-5 w-5" />
-              Start Your Collection
-            </a>
-          </div>
+          <AnimateOnScroll>
+            <div className="mt-10 text-center">
+              <a
+                href="/shop"
+                className="inline-flex items-center rounded-lg bg-sage-700 px-8 py-3.5 font-semibold text-white transition-colors hover:bg-sage-800"
+              >
+                <BookOpen className="mr-2 h-5 w-5" />
+                Start Your Collection
+              </a>
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
     </main>
