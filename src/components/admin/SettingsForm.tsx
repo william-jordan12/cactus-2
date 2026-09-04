@@ -1,11 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Save, Loader2, MessageCircle, Mail } from "lucide-react";
+import { Save, Loader2, MessageCircle, Mail, KeyRound } from "lucide-react";
 
 export default function SettingsForm() {
   const [whatsapp, setWhatsapp] = useState("");
   const [contactEmail, setContactEmail] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -19,6 +20,7 @@ export default function SettingsForm() {
       const data = await res.json();
       setWhatsapp(data.settings?.whatsapp ?? "");
       setContactEmail(data.settings?.contactEmail ?? "");
+      setAdminEmail(data.adminEmail ?? "");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load settings.");
     } finally {
@@ -38,7 +40,7 @@ export default function SettingsForm() {
       const res = await fetch("/api/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ whatsapp, contactEmail }),
+        body: JSON.stringify({ whatsapp, contactEmail, adminEmail }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -47,6 +49,7 @@ export default function SettingsForm() {
       }
       setWhatsapp(data.settings.whatsapp);
       setContactEmail(data.settings.contactEmail);
+      setAdminEmail(data.adminEmail);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch {
@@ -69,8 +72,9 @@ export default function SettingsForm() {
       <div className="rounded-2xl border border-stone-200 bg-white p-6">
         <h2 className="text-lg font-semibold text-stone-900">Store Settings</h2>
         <p className="mt-1 text-sm text-stone-500">
-          Where customer orders are handed off. Empty WhatsApp number disables
-          the WhatsApp option on checkout until a number is set.
+          Manage your WhatsApp number, contact email, and admin login email.
+          Changes apply immediately — you&apos;ll use the updated login email on
+          your next sign-in.
         </p>
 
         <div className="mt-6 space-y-5">
@@ -103,7 +107,30 @@ export default function SettingsForm() {
               placeholder="hello@saguaroseedvault.com"
               className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900 focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-200"
             />
+            <span className="mt-1 block text-xs text-stone-400">
+              Shown to customers and used for email orders (mailto links).
+            </span>
           </label>
+
+          <div className="border-t border-stone-100 pt-5">
+            <label className="block">
+              <span className="flex items-center gap-2 text-sm font-medium text-stone-700">
+                <KeyRound className="h-4 w-4 text-sage-700" />
+                Admin Login Email
+              </span>
+              <input
+                type="email"
+                value={adminEmail}
+                onChange={(e) => setAdminEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900 focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-200"
+              />
+              <span className="mt-1 block text-xs text-stone-400">
+                The email you use to sign in to this dashboard. Use the new
+                email on your next login.
+              </span>
+            </label>
+          </div>
         </div>
 
         {error ? (

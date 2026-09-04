@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     if (oldToken) {
       cookieStore.delete(SESSION_COOKIE);
     }
-    const newToken = await createSession(admin.email);
+    const newToken = await createSession(admin.id);
     await setSessionCookie(newToken);
 
     return NextResponse.json({ ok: true });

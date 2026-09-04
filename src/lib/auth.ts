@@ -28,13 +28,13 @@ export async function setSessionCookie(token: string) {
   });
 }
 
-export async function createSession(email: string): Promise<string> {
+export async function createSession(adminId: string): Promise<string> {
   const token = generateSessionToken();
   const hash = hashSessionToken(token);
   const pool = getPool();
-  await pool.query(`UPDATE admins SET session_token = $1 WHERE email = $2`, [
+  await pool.query(`UPDATE admins SET session_token = $1 WHERE id = $2`, [
     hash,
-    email,
+    adminId,
   ]);
   return token;
 }
