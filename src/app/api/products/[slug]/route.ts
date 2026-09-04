@@ -31,6 +31,10 @@ export async function PUT(req: Request, { params }: Params) {
       ? body.details.filter((d: unknown) => typeof d === "string")
       : [];
 
+    const images = Array.isArray(body.images)
+      ? body.images.filter((d: unknown) => typeof d === "string")
+      : [];
+
     const pool = getPool();
     await pool.query(
       `UPDATE ssv_products SET
@@ -38,19 +42,21 @@ export async function PUT(req: Request, { params }: Params) {
          category = $2,
          price = $3,
          image = $4,
-         description = $5,
-         details = $6,
-         featured = $7,
-         stock = $8,
-         rating = $9,
-         reviews = $10,
+         images = COALESCE($5::text[], '{}'),
+         description = $6,
+         details = $7,
+         featured = $8,
+         stock = $9,
+         rating = $10,
+         reviews = $11,
          updated_at = now()
-       WHERE slug = $11`,
+       WHERE slug = $12`,
       [
         name,
         typeof body.category === "string" ? body.category : "cacti",
         price,
         typeof body.image === "string" ? body.image : "",
+        images,
         typeof body.description === "string" ? body.description : "",
         JSON.stringify(details),
         Boolean(body.featured),

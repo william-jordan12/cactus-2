@@ -47,9 +47,13 @@ export async function POST(req: Request) {
       ? body.details.filter((d: unknown) => typeof d === "string")
       : [];
 
+    const images = Array.isArray(body.images)
+      ? body.images.filter((d: unknown) => typeof d === "string")
+      : [];
+
     const result = await pool.query(
-      `INSERT INTO ssv_products (slug, name, category, price, image, description, details, featured, stock, rating, reviews)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      `INSERT INTO ssv_products (slug, name, category, price, image, images, description, details, featured, stock, rating, reviews)
+       VALUES ($1, $2, $3, $4, $5, $6::text[], $7, $8, $9, $10, $11, $12)
        RETURNING slug`,
       [
         slug,
@@ -57,6 +61,7 @@ export async function POST(req: Request) {
         category,
         price,
         typeof body.image === "string" ? body.image : "",
+        images,
         typeof body.description === "string" ? body.description : "",
         JSON.stringify(details),
         Boolean(body.featured),

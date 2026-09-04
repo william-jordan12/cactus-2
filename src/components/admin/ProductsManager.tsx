@@ -11,6 +11,7 @@ import {
   Save,
 } from "lucide-react";
 import type { Product } from "@/lib/products";
+import ImageDropzone from "./ImageDropzone";
 
 interface CategoryOpt {
   slug: string;
@@ -23,6 +24,7 @@ interface ProductForm {
   category: string;
   price: string;
   image: string;
+  images: string[];
   description: string;
   details: string;
   featured: boolean;
@@ -37,6 +39,7 @@ const emptyForm: ProductForm = {
   category: "cacti",
   price: "",
   image: "",
+  images: [],
   description: "",
   details: "",
   featured: false,
@@ -193,6 +196,7 @@ export default function ProductsManager() {
                           category: p.category,
                           price: String(p.price),
                           image: p.image || "",
+                          images: p.images ?? [],
                           description: p.description || "",
                           details: (p.details || []).join("\n"),
                           featured: p.featured ?? false,
@@ -315,12 +319,28 @@ export default function ProductsManager() {
                   className={inputCls}
                 />
               </Field>
-              <Field label="Image URL (optional)">
+              <Field label="Cover Image">
+                <ImageDropzone
+                  images={editing.image ? [editing.image] : []}
+                  onChange={(list) =>
+                    setEditing({ ...editing, image: list[0] || "" })
+                  }
+                  multiple={false}
+                  max={1}
+                />
                 <input
                   value={editing.image}
                   onChange={(e) => setEditing({ ...editing, image: e.target.value })}
-                  className={inputCls}
-                  placeholder="/images/your-product.jpg"
+                  className={`${inputCls} mt-2`}
+                  placeholder="...or paste an image URL"
+                />
+              </Field>
+              <Field label="More Photos (drag multiple)">
+                <ImageDropzone
+                  images={editing.images}
+                  onChange={(list) => setEditing({ ...editing, images: list })}
+                  multiple
+                  max={6}
                 />
               </Field>
               <div className="sm:col-span-2">

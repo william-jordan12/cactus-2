@@ -47,6 +47,7 @@ const SCHEMA_SQL = [
     category TEXT NOT NULL REFERENCES ssv_categories(slug) ON DELETE CASCADE,
     price NUMERIC(10,2) NOT NULL,
     image TEXT DEFAULT '',
+    images TEXT[] DEFAULT '{}',
     description TEXT DEFAULT '',
     details JSONB DEFAULT '[]',
     featured BOOLEAN DEFAULT false,
@@ -56,6 +57,7 @@ const SCHEMA_SQL = [
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
   )`,
+  `ALTER TABLE ssv_products ADD COLUMN IF NOT EXISTS images TEXT[] DEFAULT '{}'`,
   `CREATE TABLE IF NOT EXISTS ssv_admins (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,

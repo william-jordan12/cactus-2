@@ -16,6 +16,7 @@ declare module "lucide-react" {
   export const Droplets: Icon;
   export const Filter: Icon;
   export const FlaskConical: Icon;
+  export const ImagePlus: Icon;
   export const KeyRound: Icon;
   export const Leaf: Icon;
   export const Loader2: Icon;

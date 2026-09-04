@@ -27,6 +27,7 @@ function mapProduct(row: Record<string, unknown>): Product {
     category: String(row.category) as Category,
     price: Number(row.price),
     image: String(row.image || "/images/placeholder.jpg"),
+    images: Array.isArray(row.images) ? row.images.map(String) : [],
     description: String(row.description || ""),
     details: Array.isArray(row.details)
       ? (row.details as string[])
@@ -68,7 +69,7 @@ export async function getProducts(): Promise<Product[]> {
   try {
     await initDb();
     const result = await getPool().query(
-      `SELECT slug, name, category, price, image, description, details, featured, stock, rating, reviews
+      `SELECT slug, name, category, price, image, images, description, details, featured, stock, rating, reviews
        FROM ssv_products ORDER BY featured DESC, name ASC`
     );
     return result.rows.map(mapProduct);
@@ -81,7 +82,7 @@ export async function getProductBySlug(slug: string): Promise<Product | undefine
   try {
     await initDb();
     const result = await getPool().query(
-      `SELECT slug, name, category, price, image, description, details, featured, stock, rating, reviews
+      `SELECT slug, name, category, price, image, images, description, details, featured, stock, rating, reviews
        FROM ssv_products WHERE slug = $1`,
       [slug]
     );

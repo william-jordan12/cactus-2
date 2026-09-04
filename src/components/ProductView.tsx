@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   Star,
@@ -27,6 +28,11 @@ export default function ProductView({
   const { addToCart } = useCart();
   const productReviews = getReviewsForProduct(product.slug);
 
+  const gallery = [...new Set([product.image, ...(product.images ?? [])])].filter(
+    Boolean
+  );
+  const [active, setActive] = useState(0);
+
   return (
     <main className="flex-1">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -50,14 +56,39 @@ export default function ProductView({
         </nav>
 
         <div className="grid gap-10 lg:grid-cols-2">
+          <div>
           <div className="overflow-hidden rounded-3xl border border-stone-200 bg-white">
             <ProductImage
               category={product.category}
               name={product.name}
-              image={product.image}
+              image={gallery[active] || product.image}
               className="aspect-square w-full"
             />
           </div>
+
+          {gallery.length > 1 && (
+            <div className="mt-4 flex gap-3">
+              {gallery.map((img, i) => (
+                <button
+                  key={img}
+                  type="button"
+                  onMouseEnter={() => setActive(i)}
+                  onClick={() => setActive(i)}
+                  className={`h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 transition-colors ${
+                    i === active ? "border-sage-600" : "border-transparent"
+                  }`}
+                >
+                  <ProductImage
+                    category={product.category}
+                    name={product.name}
+                    image={img}
+                    className="h-full w-full"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
           <div>
             {product.category === "rare" && (
