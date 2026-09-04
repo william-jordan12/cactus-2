@@ -13,6 +13,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <ProductImage
           category={product.category}
           name={product.name}
+          image={product.image}
           className="h-56 w-full transition-transform duration-300 group-hover:scale-105"
         />
         {product.category === "rare" && (

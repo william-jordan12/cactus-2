@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, LogIn, AlertTriangle } from "lucide-react";
+import { Lock, LogIn, User, AlertTriangle } from "lucide-react";
 import Logo from "@/components/Logo";
 
 export default function AdminLogin() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function AdminLogin() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
@@ -57,16 +57,23 @@ export default function AdminLogin() {
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
             <label className="mb-2 block text-sm font-medium text-stone-700">
-              Email
+              Username
             </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-stone-300 px-4 py-3 text-stone-900 outline-none focus:border-sage-500"
-              placeholder="admin@saguaroseedvault.com"
-            />
+            <div className="relative">
+              <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
+              <input
+                type="text"
+                autoComplete="username"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full rounded-lg border border-stone-300 py-3 pl-10 pr-4 text-stone-900 outline-none focus:border-sage-500"
+                placeholder="admin"
+              />
+            </div>
+            <span className="mt-1 block text-xs text-stone-400">
+              {username ? (username.toLowerCase() === "admin" ? "Correct username." : "Hint: your username is admin") : "Your admin username"}
+            </span>
           </div>
           <div>
             <label className="mb-2 block text-sm font-medium text-stone-700">

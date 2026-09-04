@@ -59,10 +59,13 @@ const SCHEMA_SQL = [
   `CREATE TABLE IF NOT EXISTS admins (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,
+    username TEXT UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
     session_token TEXT,
     created_at TIMESTAMPTZ DEFAULT now()
   )`,
+  `ALTER TABLE admins ADD COLUMN IF NOT EXISTS username TEXT`,
+  `CREATE UNIQUE INDEX IF NOT EXISTS admins_username_key ON admins(username)`,
   `CREATE TABLE IF NOT EXISTS orders (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     reference TEXT UNIQUE NOT NULL,
@@ -130,10 +133,14 @@ export async function initDb(): Promise<void> {
 
 async function seedAdmin(client: PoolClient) {
   await client.query(
-    `INSERT INTO admins (email, password_hash)
-     VALUES ($1, $2)
-     ON CONFLICT (email) DO NOTHING`,
+    `INSERT INTO admins (email, username, password_hash)
+     VALUES ($1, 'admin', $2)
+     ON CONFLICT (username) DO NOTHING`,
     [env.adminEmail, hashPassword(env.adminInitialPassword)]
+  );
+  await client.query(
+    `UPDATE admins SET username = 'admin' WHERE username IS NULL AND email = $1`,
+    [env.adminEmail]
   );
 }
 
@@ -165,7 +172,8 @@ async function seedCategoriesAndProducts(client: PoolClient) {
     await client.query(
       `INSERT INTO products (slug, name, category, price, image, description, details, featured, stock, rating, reviews)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-       ON CONFLICT (slug) DO NOTHING`,
+       ON CONFLICT (slug) DO UPDATE SET
+         image = CASE WHEN products.image LIKE '/images/%' THEN EXCLUDED.image ELSE products.image END`,
       [
         p.slug,
         p.name,

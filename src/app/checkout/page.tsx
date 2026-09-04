@@ -305,6 +305,7 @@ export default function CheckoutPage() {
                       <ProductImage
                         category={product.category}
                         name={product.name}
+                        image={product.image}
                         className="h-full w-full"
                       />
                     </div>

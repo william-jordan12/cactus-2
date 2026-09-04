@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Save, Loader2, MessageCircle, Mail, KeyRound } from "lucide-react";
+import { Save, Loader2, MessageCircle, Mail, User } from "lucide-react";
 
 export default function SettingsForm() {
   const [whatsapp, setWhatsapp] = useState("");
   const [contactEmail, setContactEmail] = useState("");
-  const [adminEmail, setAdminEmail] = useState("");
+  const [adminUsername, setAdminUsername] = useState("admin");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -20,7 +20,7 @@ export default function SettingsForm() {
       const data = await res.json();
       setWhatsapp(data.settings?.whatsapp ?? "");
       setContactEmail(data.settings?.contactEmail ?? "");
-      setAdminEmail(data.adminEmail ?? "");
+      setAdminUsername(data.adminUsername ?? "admin");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load settings.");
     } finally {
@@ -40,7 +40,7 @@ export default function SettingsForm() {
       const res = await fetch("/api/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ whatsapp, contactEmail, adminEmail }),
+        body: JSON.stringify({ whatsapp, contactEmail }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -49,7 +49,6 @@ export default function SettingsForm() {
       }
       setWhatsapp(data.settings.whatsapp);
       setContactEmail(data.settings.contactEmail);
-      setAdminEmail(data.adminEmail);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch {
@@ -72,9 +71,9 @@ export default function SettingsForm() {
       <div className="rounded-2xl border border-stone-200 bg-white p-6">
         <h2 className="text-lg font-semibold text-stone-900">Store Settings</h2>
         <p className="mt-1 text-sm text-stone-500">
-          Manage your WhatsApp number, contact email, and admin login email.
-          Changes apply immediately — you&apos;ll use the updated login email on
-          your next sign-in.
+          Manage the WhatsApp number customers use to send orders, and the
+          contact email shown to buyers. You log in with the username admin +
+          your password (change it under Change Password).
         </p>
 
         <div className="mt-6 space-y-5">
@@ -115,19 +114,19 @@ export default function SettingsForm() {
           <div className="border-t border-stone-100 pt-5">
             <label className="block">
               <span className="flex items-center gap-2 text-sm font-medium text-stone-700">
-                <KeyRound className="h-4 w-4 text-sage-700" />
-                Admin Login Email
+                <User className="h-4 w-4 text-sage-700" />
+                Admin Username
               </span>
               <input
-                type="email"
-                value={adminEmail}
-                onChange={(e) => setAdminEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900 focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-200"
+                disabled
+                readOnly
+                value={adminUsername}
+                className="mt-1.5 w-full cursor-not-allowed rounded-lg border border-stone-200 bg-stone-50 px-4 py-2.5 text-stone-500"
               />
               <span className="mt-1 block text-xs text-stone-400">
-                The email you use to sign in to this dashboard. Use the new
-                email on your next login.
+                Your login username. You sign in with{" "}
+                <span className="font-medium text-stone-600">{adminUsername}</span> +
+                your password.
               </span>
             </label>
           </div>

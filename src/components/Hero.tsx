@@ -8,7 +8,7 @@ export default function Hero() {
       <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-sage-200/40 blur-3xl animate-float" />
       <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-terracotta-200/30 blur-3xl animate-float" style={{ animationDelay: "1.5s" }} />
 
-      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
+      <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8 hero-stagger">
         <div className="flex items-center gap-2 rounded-full border border-sage-300 bg-white/70 px-4 py-1.5 text-sm font-medium text-sage-800 backdrop-blur">
           <Leaf className="h-4 w-4" />
           Rare seeds shipped worldwide

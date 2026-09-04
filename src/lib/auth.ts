@@ -12,6 +12,7 @@ export { SESSION_COOKIE };
 
 export interface Admin {
   id: string;
+  username: string;
   email: string;
 }
 
@@ -54,22 +55,26 @@ export async function getSessionAdmin(): Promise<Admin | null> {
   const hash = hashSessionToken(token);
   const pool = getPool();
   const result = await pool.query(
-    `SELECT id, email FROM admins WHERE session_token = $1`,
+    `SELECT id, username, email FROM admins WHERE session_token = $1`,
     [hash]
   );
   const row = result.rows[0];
   if (!row) return null;
-  return { id: String(row.id), email: String(row.email) };
+  return {
+    id: String(row.id),
+    username: String(row.username),
+    email: String(row.email),
+  };
 }
 
-export async function loginAdmin(email: string, password: string) {
+export async function loginAdmin(username: string, password: string) {
   const pool = getPool();
   const result = await pool.query(
-    `SELECT id, email, password_hash FROM admins WHERE email = $1`,
-    [email.toLowerCase().trim()]
+    `SELECT id, username, email, password_hash FROM admins WHERE lower(username) = $1`,
+    [username.trim().toLowerCase()]
   );
   const row = result.rows[0];
   if (!row) return null;
   if (!verifyPassword(password, String(row.password_hash))) return null;
-  return { id: String(row.id), email: String(row.email) };
+  return { id: String(row.id), username: String(row.username), email: String(row.email) };
 }

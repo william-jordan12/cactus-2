@@ -54,6 +54,7 @@ export default function ProductView({
             <ProductImage
               category={product.category}
               name={product.name}
+              image={product.image}
               className="aspect-square w-full"
             />
           </div>

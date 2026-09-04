@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { getFeaturedProducts } from "@/lib/store";
 import { Leaf, ShieldCheck, Sprout, PackageCheck, Star, CheckCircle2 } from "lucide-react";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
+import CountUp from "@/components/CountUp";
 import { reviews } from "@/lib/reviews";
 
 const featuredReviews = reviews
@@ -111,16 +112,20 @@ export default async function Home() {
                 <div className="flex-1 rounded-t-2xl border-x border-t border-sage-700 bg-sage-700 p-6">
                   <Star className="h-8 w-8 text-amber-400" />
                   <p className="mt-4 text-2xl font-bold text-white">
-                    12,000+
+                    <CountUp end={12000} suffix="+" />
                   </p>
                   <p className="text-sm text-sage-200">Happy growers</p>
                 </div>
                 <div className="flex-1 rounded-t-2xl border-x border-t border-sage-700 bg-sage-700 p-6 pt-10">
-                  <p className="text-2xl font-bold text-white">50+</p>
+                  <p className="text-2xl font-bold text-white">
+                    <CountUp end={50} suffix="+" />
+                  </p>
                   <p className="text-sm text-sage-200">Seed varieties</p>
                 </div>
                 <div className="flex-1 rounded-t-2xl border-x border-t border-sage-700 bg-sage-700 p-6 pt-10">
-                  <p className="text-2xl font-bold text-white">4.9★</p>
+                  <p className="text-2xl font-bold text-white">
+                    <CountUp end={4.9} decimals={1} suffix="★" />
+                  </p>
                   <p className="text-sm text-sage-200">Average rating</p>
                 </div>
               </div>

@@ -43,7 +43,7 @@ export const products: Product[] = [
     name: "Saguaro (Carnegiea gigantea) Seed Pack",
     category: "cacti",
     price: 12.99,
-    image: "/images/saguaro.jpg",
+    image: "https://images.unsplash.com/photo-1485841890310-6a055c88698a?w=800&q=80&auto=format&fit=crop",
     description:
       "The iconic symbol of the American Southwest. Slow-growing but majestic, the Saguaro can live for over 150 years and reach 40 feet tall. Each pack contains 25 viable seeds with detailed germination instructions.",
     details: [
@@ -62,7 +62,7 @@ export const products: Product[] = [
     name: "Peyote (Lophophora williamsii) Seeds",
     category: "cacti",
     price: 18.5,
-    image: "/images/peyote.jpg",
+    image: "https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?w=800&q=80&auto=format&fit=crop",
     description:
       "Small, spineless, and button-shaped, Peyote is one of the most revered cacti in history. Slow-growing with a rich cultural heritage, each pack contains 20 seeds ready for indoor cultivation.",
     details: [
@@ -81,7 +81,7 @@ export const products: Product[] = [
     name: "San Pedro (Trichocereus pachanoi) Seeds",
     category: "cacti",
     price: 14.5,
-    image: "/images/sanpedro.jpg",
+    image: "https://images.unsplash.com/photo-1509587584298-0f3b3a3a1797?w=800&q=80&auto=format&fit=crop",
     description:
       "The fast-growing columnar cactus from the Andes. San Pedro is prized for its rapid growth rate and striking ribbed columns. Perfect for beginners wanting a rewarding cactus. 30 seeds per pack.",
     details: [
@@ -100,7 +100,7 @@ export const products: Product[] = [
     name: "Barrel Cactus (Echinocactus) Mix Seeds",
     category: "cacti",
     price: 9.99,
-    image: "/images/barrel.jpg",
+    image: "https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?w=800&q=80&auto=format&fit=crop",
     description:
       "A colorful mix of golden barrel and red barrel cactus seeds. These round, ribbed beauties produce stunning flowers when mature. 40 seeds per pack of mixed species.",
     details: [
@@ -118,7 +118,7 @@ export const products: Product[] = [
     name: "Mammillaria (Powder Puff) Seed Mix",
     category: "cacti",
     price: 8.75,
-    image: "/images/mammillaria.jpg",
+    image: "https://images.unsplash.com/photo-1509587584298-0f3b3a3a1797?w=800&q=80&auto=format&fit=crop",
     description:
       "Dozens of Mammillaria species that cluster and flower generously. The 'powder puff' nickname comes from their soft, hair-like spines. 35 seeds per pack.",
     details: [
@@ -136,7 +136,7 @@ export const products: Product[] = [
     name: "String of Pearls (Senecio rowleyanus) Seeds",
     category: "succulents",
     price: 7.5,
-    image: "/images/stringpearls.jpg",
+    image: "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=800&q=80&auto=format&fit=crop",
     description:
       "The trailing succulent that looks like a string of tiny green peas. Perfect for hanging baskets and shelves. 20 seeds per pack with detailed instructions.",
     details: [
@@ -155,7 +155,7 @@ export const products: Product[] = [
     name: "Lithops (Living Stones) Mixed Seeds",
     category: "succulents",
     price: 10.25,
-    image: "/images/lithops.jpg",
+    image: "https://images.unsplash.com/photo-1509319117193-57bab727e09d?w=800&q=80&auto=format&fit=crop",
     description:
       "Nature's perfect camouflage. These pebble-like succulents blend into rocky environments and burst with daisy-like flowers. 25 seeds of mixed varieties.",
     details: [
@@ -173,7 +173,7 @@ export const products: Product[] = [
     name: "Echeveria Rosette Seed Mix",
     category: "succulents",
     price: 8.99,
-    image: "/images/echeveria.jpg",
+    image: "https://images.unsplash.com/photo-1508280756091-9bdd7ef1f463?w=800&q=80&auto=format&fit=crop",
     description:
       "Beautiful rosette-forming succulents in a rainbow of colors — from powdery blues to blush pinks. 30 seeds of multiple Echeveria species.",
     details: [
@@ -191,7 +191,7 @@ export const products: Product[] = [
     name: "Jade Plant (Crassula ovata) Seeds",
     category: "succulents",
     price: 6.99,
-    image: "/images/jade.jpg",
+    image: "https://images.unsplash.com/photo-1463320726281-696a485928c7?w=800&q=80&auto=format&fit=crop",
     description:
       "The classic lucky money plant. Jade plants develop thick, woody trunks and glossy oval leaves. 25 seeds per pack, symbols of good fortune.",
     details: [
@@ -209,7 +209,7 @@ export const products: Product[] = [
     name: "Astrophytum (Star Cactus) Seeds",
     category: "rare",
     price: 24.99,
-    image: "/images/astrophytum.jpg",
+    image: "https://images.unsplash.com/photo-1485841890310-6a055c88698a?w=800&q=80&auto=format&fit=crop",
     description:
       "The coveted Star Cactus with its distinctive white-dotted ribs. A true collector's piece that's rarely offered as seed. 15 premium seeds per pack.",
     details: [
@@ -228,7 +228,7 @@ export const products: Product[] = [
     name: "Aztekium ritteri Seeds",
     category: "rare",
     price: 32.5,
-    image: "/images/aztekium.jpg",
+    image: "https://images.unsplash.com/photo-1522748906645-95d8adfd52c7?w=800&q=80&auto=format&fit=crop",
     description:
       "One of the rarest and slowest-growing cacti in existence, found only in a single valley in Mexico. A true holy grail for serious collectors. 10 seeds per pack.",
     details: [
@@ -246,7 +246,7 @@ export const products: Product[] = [
     name: "Blossfeldia liliputana (Smallest Cactus) Seeds",
     category: "rare",
     price: 28.0,
-    image: "/images/blossfeldia.jpg",
+    image: "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&q=80&auto=format&fit=crop",
     description:
       "The world's smallest cactus, native to the high Andes. Mature plants barely exceed a centimeter across. 12 rare seeds per pack for dedicated growers.",
     details: [
@@ -264,7 +264,7 @@ export const products: Product[] = [
     name: "Seedling Heat Mat (10x20 inch)",
     category: "tools",
     price: 19.99,
-    image: "/images/heatmat.jpg",
+    image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=800&q=80&auto=format&fit=crop",
     description:
       "Consistent bottom heat is the secret to high cactus germination rates. Waterproof, thermostatically controlled mat raises soil temperature by 10-20 degrees.",
     details: [
@@ -282,7 +282,7 @@ export const products: Product[] = [
     name: "Deluxe Seed Germination Kit",
     category: "tools",
     price: 34.99,
-    image: "/images/germkit.jpg",
+    image: "https://images.unsplash.com/photo-1520423465871-0866049020b7?w=800&q=80&auto=format&fit=crop",
     description:
       "Everything you need to sprout your cactus seeds: humidity dome trays, perlite mix, labels, a misting bottle, and a full-color growing guide.",
     details: [
@@ -300,7 +300,7 @@ export const products: Product[] = [
     name: "Premium Succulent & Cactus Soil Mix",
     category: "tools",
     price: 11.5,
-    image: "/images/soil.jpg",
+    image: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800&q=80&auto=format&fit=crop",
     description:
       "A perfectly draining blend of pumice, perlite, coarse sand, and organic matter. Pre-mixed to the ideal ratio for cacti and succulents. 2 quarts.",
     details: [
@@ -318,7 +318,7 @@ export const products: Product[] = [
     name: "Precision Planting Tweezers Set",
     category: "tools",
     price: 8.5,
-    image: "/images/tweezers.jpg",
+    image: "https://images.unsplash.com/photo-1512428813834-c702c7702b78?w=800&q=80&auto=format&fit=crop",
     description:
       "Planting tiny cactus seeds is easy with these precision tweezers. Includes a straight and angled tip for delicate handling of small seeds.",
     details: [

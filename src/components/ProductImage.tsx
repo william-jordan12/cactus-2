@@ -1,6 +1,7 @@
 interface ProductImageProps {
   category: string;
   name: string;
+  image?: string;
   className?: string;
 }
 
@@ -14,8 +15,21 @@ const categoryColors: Record<string, { bg: string; accent: string; label: string
 export default function ProductImage({
   category,
   name,
+  image,
   className = "",
 }: ProductImageProps) {
+  if (image) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={image}
+        alt={name}
+        loading="lazy"
+        className={`object-cover ${className}`}
+      />
+    );
+  }
+
   const colors = categoryColors[category] ?? categoryColors.cacti;
 
   return (
