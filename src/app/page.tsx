@@ -7,6 +7,9 @@ import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
 import { reviews } from "@/lib/reviews";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const featuredReviews = reviews
   .filter((r) => r.rating === 5)
   .slice(0, 4);

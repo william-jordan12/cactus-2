@@ -1,6 +1,9 @@
 import { getProducts } from "@/lib/store";
 import ShopContent from "./ShopContent";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata = {
   title: "Shop",
   description:
