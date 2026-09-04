@@ -33,7 +33,7 @@ export async function createSession(adminId: string): Promise<string> {
   const token = generateSessionToken();
   const hash = hashSessionToken(token);
   const pool = getPool();
-  await pool.query(`UPDATE admins SET session_token = $1 WHERE id = $2`, [
+  await pool.query(`UPDATE ssv_admins SET session_token = $1 WHERE id = $2`, [
     hash,
     adminId,
   ]);
@@ -42,7 +42,7 @@ export async function createSession(adminId: string): Promise<string> {
 
 export async function destroySessionToken(tokenHash: string) {
   const pool = getPool();
-  await pool.query(`UPDATE admins SET session_token = NULL WHERE session_token = $1`, [
+  await pool.query(`UPDATE ssv_admins SET session_token = NULL WHERE session_token = $1`, [
     tokenHash,
   ]);
 }
@@ -55,7 +55,7 @@ export async function getSessionAdmin(): Promise<Admin | null> {
   const hash = hashSessionToken(token);
   const pool = getPool();
   const result = await pool.query(
-    `SELECT id, username, email FROM admins WHERE session_token = $1`,
+    `SELECT id, username, email FROM ssv_admins WHERE session_token = $1`,
     [hash]
   );
   const row = result.rows[0];
@@ -70,7 +70,7 @@ export async function getSessionAdmin(): Promise<Admin | null> {
 export async function loginAdmin(username: string, password: string) {
   const pool = getPool();
   const result = await pool.query(
-    `SELECT id, username, email, password_hash FROM admins WHERE lower(username) = $1`,
+    `SELECT id, username, email, password_hash FROM ssv_admins WHERE lower(username) = $1`,
     [username.trim().toLowerCase()]
   );
   const row = result.rows[0];

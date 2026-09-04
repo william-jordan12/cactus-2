@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
     const pool = getPool();
     const result = await pool.query(
-      `SELECT password_hash FROM admins WHERE id = $1`,
+      `SELECT password_hash FROM ssv_admins WHERE id = $1`,
       [admin.id]
     );
     const row = result.rows[0];
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
     const newHash = hashPassword(next);
     await pool.query(
-      `UPDATE admins SET password_hash = $1, session_token = NULL WHERE id = $2`,
+      `UPDATE ssv_admins SET password_hash = $1, session_token = NULL WHERE id = $2`,
       [newHash, admin.id]
     );
 

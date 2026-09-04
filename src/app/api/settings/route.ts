@@ -57,7 +57,7 @@ export async function PUT(req: Request) {
 
     const pool = getPool();
     await pool.query(
-      `INSERT INTO settings (key, value) VALUES ('whatsapp', $1), ('contact_email', $2)
+      `INSERT INTO ssv_settings (key, value) VALUES ('whatsapp', $1), ('contact_email', $2)
        ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()`,
       [whatsapp, contactEmail]
     );

@@ -26,7 +26,7 @@ export async function getSettings(): Promise<SiteSettings> {
   try {
     await initDb();
     const result = await getPool().query(
-      `SELECT key, value FROM settings WHERE key IN ('whatsapp', 'contact_email')`
+      `SELECT key, value FROM ssv_settings WHERE key IN ('whatsapp', 'contact_email')`
     );
     const map = new Map<string, string>();
     for (const row of result.rows) {

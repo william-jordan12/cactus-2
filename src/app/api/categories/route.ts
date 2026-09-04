@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     const slug = slugify(name);
     const pool = getPool();
     await pool.query(
-      `INSERT INTO categories (slug, name, description)
+      `INSERT INTO ssv_categories (slug, name, description)
        VALUES ($1, $2, $3)
        ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, description = EXCLUDED.description`,
       [slug, name, typeof body.description === "string" ? body.description : ""]

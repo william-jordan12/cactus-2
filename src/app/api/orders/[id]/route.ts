@@ -17,13 +17,13 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     const { id } = await params;
     const pool = getPool();
 
-    const orderResult = await pool.query(`SELECT * FROM orders WHERE id = $1`, [id]);
+    const orderResult = await pool.query(`SELECT * FROM ssv_orders WHERE id = $1`, [id]);
     if (orderResult.rows.length === 0) {
       return NextResponse.json({ error: "Order not found." }, { status: 404 });
     }
 
     const itemsResult = await pool.query(
-      `SELECT product_slug, product_name, price, qty FROM order_items WHERE order_id = $1`,
+      `SELECT product_slug, product_name, price, qty FROM ssv_order_items WHERE order_id = $1`,
       [id]
     );
 
@@ -53,7 +53,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     }
 
     const pool = getPool();
-    await pool.query(`UPDATE orders SET status = $1 WHERE id = $2`, [status, id]);
+    await pool.query(`UPDATE ssv_orders SET status = $1 WHERE id = $2`, [status, id]);
 
     return NextResponse.json({ ok: true });
   } catch (err) {

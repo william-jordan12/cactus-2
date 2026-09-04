@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "reset:admin": "node scripts/reset-admin-password.mjs",
+    "init:db": "node scripts/init-db.mjs"
   },
   "dependencies": {
     "lucide-react": "1.38.0",

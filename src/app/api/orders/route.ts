@@ -23,8 +23,8 @@ export async function GET() {
       `SELECT o.id, o.reference, o.customer_name, o.email, o.phone, o.address, o.city, o.country,
               o.notes, o.delivery_method, o.status, o.subtotal, o.total, o.created_at,
               COALESCE(SUM(oi.qty), 0)::int AS item_count
-       FROM orders o
-       LEFT JOIN order_items oi ON oi.order_id = o.id
+       FROM ssv_orders o
+       LEFT JOIN ssv_order_items oi ON oi.order_id = o.id
        GROUP BY o.id
        ORDER BY o.created_at DESC`
     );
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 
     const slugs = items.map((i) => i.slug);
     const productResult = await pool.query(
-      `SELECT slug, name, price FROM products WHERE slug = ANY($1)`,
+      `SELECT slug, name, price FROM ssv_products WHERE slug = ANY($1)`,
       [slugs]
     );
     const productMap = new Map<string, { name: string; price: number }>();
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
     try {
       await client.query("BEGIN");
       const orderResult = await client.query(
-        `INSERT INTO orders (reference, customer_name, email, phone, address, city, country, notes, delivery_method, subtotal, total)
+        `INSERT INTO ssv_orders (reference, customer_name, email, phone, address, city, country, notes, delivery_method, subtotal, total)
          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
          RETURNING id, reference`,
         [
@@ -120,7 +120,7 @@ export async function POST(req: Request) {
 
       for (const it of lineItems) {
         await client.query(
-          `INSERT INTO order_items (order_id, product_slug, product_name, price, qty)
+          `INSERT INTO ssv_order_items (order_id, product_slug, product_name, price, qty)
            VALUES ($1,$2,$3,$4,$5)`,
           [orderId, it.slug, it.name, it.price.toFixed(2), it.qty]
         );

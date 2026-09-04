@@ -33,7 +33,7 @@ export async function PUT(req: Request, { params }: Params) {
 
     const pool = getPool();
     await pool.query(
-      `UPDATE products SET
+      `UPDATE ssv_products SET
          name = $1,
          category = $2,
          price = $3,
@@ -78,7 +78,7 @@ export async function DELETE(_req: Request, { params }: Params) {
 
     const { slug } = await params;
     const pool = getPool();
-    await pool.query(`DELETE FROM products WHERE slug = $1`, [slug]);
+    await pool.query(`DELETE FROM ssv_products WHERE slug = $1`, [slug]);
 
     return NextResponse.json({ ok: true });
   } catch (err) {

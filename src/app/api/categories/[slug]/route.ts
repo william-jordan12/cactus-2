@@ -15,7 +15,7 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ slug
     const { slug } = await params;
     const pool = getPool();
 
-    const count = await pool.query(`SELECT COUNT(*) AS n FROM products WHERE category = $1`, [slug]);
+    const count = await pool.query(`SELECT COUNT(*) AS n FROM ssv_products WHERE category = $1`, [slug]);
     if (Number(count.rows[0].n) > 0) {
       return NextResponse.json(
         { error: "Could not delete a category that still has products." },
@@ -23,7 +23,7 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ slug
       );
     }
 
-    await pool.query(`DELETE FROM categories WHERE slug = $1`, [slug]);
+    await pool.query(`DELETE FROM ssv_categories WHERE slug = $1`, [slug]);
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("delete category error", err);

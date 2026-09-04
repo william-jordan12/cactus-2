@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     const slug = slugify(typeof body.slug === "string" && body.slug ? body.slug : name);
 
     const pool = getPool();
-    const exists = await pool.query(`SELECT slug FROM products WHERE slug = $1`, [slug]);
+    const exists = await pool.query(`SELECT slug FROM ssv_products WHERE slug = $1`, [slug]);
     if (exists.rows.length > 0) {
       return NextResponse.json(
         { error: "A product with that slug already exists." },
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       : [];
 
     const result = await pool.query(
-      `INSERT INTO products (slug, name, category, price, image, description, details, featured, stock, rating, reviews)
+      `INSERT INTO ssv_products (slug, name, category, price, image, description, details, featured, stock, rating, reviews)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
        RETURNING slug`,
       [

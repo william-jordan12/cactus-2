@@ -56,7 +56,7 @@ export async function getCategories(): Promise<DbCategory[]> {
   try {
     await initDb();
     const result = await getPool().query(
-      `SELECT slug, name, description FROM categories ORDER BY name`
+      `SELECT slug, name, description FROM ssv_categories ORDER BY name`
     );
     return result.rows.map(mapCategory);
   } catch {
@@ -69,7 +69,7 @@ export async function getProducts(): Promise<Product[]> {
     await initDb();
     const result = await getPool().query(
       `SELECT slug, name, category, price, image, description, details, featured, stock, rating, reviews
-       FROM products ORDER BY featured DESC, name ASC`
+       FROM ssv_products ORDER BY featured DESC, name ASC`
     );
     return result.rows.map(mapProduct);
   } catch {
@@ -82,7 +82,7 @@ export async function getProductBySlug(slug: string): Promise<Product | undefine
     await initDb();
     const result = await getPool().query(
       `SELECT slug, name, category, price, image, description, details, featured, stock, rating, reviews
-       FROM products WHERE slug = $1`,
+       FROM ssv_products WHERE slug = $1`,
       [slug]
     );
     const row = result.rows[0];
