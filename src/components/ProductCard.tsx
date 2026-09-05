@@ -14,7 +14,7 @@ export default function ProductCard({ product }: { product: Product }) {
           category={product.category}
           name={product.name}
           image={product.image}
-          className="h-56 w-full transition-transform duration-300 group-hover:scale-105"
+          className="h-56 w-full transition-transform duration-500 ease-out group-hover:scale-110"
         />
         {product.category === "rare" && (
           <span className="badge-pulse absolute left-3 top-3 rounded-full bg-terracotta-600 px-3 py-1 text-xs font-semibold text-white">

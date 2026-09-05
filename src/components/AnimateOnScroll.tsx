@@ -12,11 +12,19 @@ export default function AnimateOnScroll({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  // Start visible so content is never blank, even before JS runs.
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    // Only hide the element if it's below the initial viewport, so the
+    // scroll-in animation is visible when the user reaches it.
+    if (rect.top > window.innerHeight) {
+      setVisible(false);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -25,7 +33,7 @@ export default function AnimateOnScroll({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -34,10 +42,10 @@ export default function AnimateOnScroll({
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out ${
+      className={`transition-all duration-1000 ease-out will-change-transform ${
         visible
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-8"
+          ? "opacity-100 translate-y-0 scale-100"
+          : "opacity-0 translate-y-12 scale-95"
       } ${className}`}
     >
       {children}
