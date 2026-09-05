@@ -122,23 +122,6 @@ html {
   animation: float 3.5s ease-in-out infinite;
 }
 
-/* Hero entrance stagger */
-@keyframes hero-up {
-  from { opacity: 0; transform: translateY(36px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.hero-stagger > * {
-  opacity: 0;
-  animation: hero-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.hero-stagger > *:nth-child(1) { animation-delay: 0.05s; }
-.hero-stagger > *:nth-child(2) { animation-delay: 0.18s; }
-.hero-stagger > *:nth-child(3) { animation-delay: 0.32s; }
-.hero-stagger > *:nth-child(4) { animation-delay: 0.45s; }
-.hero-stagger > *:nth-child(5) { animation-delay: 0.6s; }
-.hero-stagger > *:nth-child(6) { animation-delay: 0.72s; }
-.hero-stagger > *:nth-child(7) { animation-delay: 0.84s; }
-
 /* Respect users who prefer reduced motion: snap everything visible & static */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -148,7 +131,6 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .hero-stagger > *,
   .stagger-children > *,
   .animate-fade-in-up {
     opacity: 1 !important;

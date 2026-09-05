@@ -2,17 +2,12 @@ import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getFeaturedProducts } from "@/lib/store";
-import { Leaf, ShieldCheck, Sprout, PackageCheck, Star, CheckCircle2 } from "lucide-react";
+import { Leaf, ShieldCheck, Sprout, PackageCheck, Star } from "lucide-react";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
-import { reviews } from "@/lib/reviews";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-
-const featuredReviews = reviews
-  .filter((r) => r.rating === 5)
-  .slice(0, 4);
 
 export default async function Home() {
   const featured = await getFeaturedProducts();
@@ -135,55 +130,6 @@ export default async function Home() {
             </div>
           </div>
         </AnimateOnScroll>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <AnimateOnScroll>
-          <SectionHeading
-            eyebrow="Testimonials"
-            title="Loved by Growers Worldwide"
-            description="Real reviews from our community of cactus and succulent enthusiasts."
-          />
-        </AnimateOnScroll>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 stagger-children">
-          {featuredReviews.map((review) => (
-            <div
-              key={review.id}
-              className="hover-lift flex flex-col rounded-2xl border border-stone-200 bg-white p-6"
-            >
-              <div className="flex items-center gap-0.5 text-amber-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-amber-500" />
-                ))}
-              </div>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-stone-600">
-                &ldquo;{review.body.slice(0, 120)}...&rdquo;
-              </p>
-              <div className="mt-4 flex items-center gap-2 border-t border-stone-100 pt-4">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sage-100 text-xs font-bold text-sage-700">
-                  {review.customerName.charAt(0)}
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-stone-900">
-                    {review.customerName}
-                    {review.verified && (
-                      <CheckCircle2 className="ml-1 inline h-3 w-3 text-sage-600" />
-                    )}
-                  </p>
-                  <p className="text-xs text-stone-500">{review.location}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <a
-            href="/reviews"
-            className="text-sm font-semibold text-sage-700 hover:text-sage-800"
-          >
-            Read All Reviews →
-          </a>
-        </div>
       </section>
     </main>
   );
