@@ -3,6 +3,7 @@
 import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductGrid from "@/components/ProductGrid";
+import CategoryBrowser from "@/components/CategoryBrowser";
 import type { Product, Category } from "@/lib/products";
 import { PawPrint } from "lucide-react";
 
@@ -31,6 +32,8 @@ function ShopContentInner({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <CategoryBrowser />
+
       <div className="flex flex-wrap items-center gap-3">
         <a
           href="/shop"

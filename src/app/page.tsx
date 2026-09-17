@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import CategoryBrowser from "@/components/CategoryBrowser";
 import { SectionHeading } from "@/components/SectionHeading";
-import { getFeaturedProducts } from "@/lib/store";
+import { getProducts } from "@/lib/store";
 import { Heart, ShieldCheck, PackageCheck, MessageCircle, Star, PawPrint } from "lucide-react";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function Home() {
-  const featured = await getFeaturedProducts();
+  const all = await getProducts();
 
   return (
     <main className="flex-1">
@@ -27,7 +27,7 @@ export default async function Home() {
                 Meet Them
               </p>
               <h2 className="mt-2 text-3xl font-bold text-stone-900">
-                Featured Pets
+                All Pets
               </h2>
             </div>
             <a
@@ -38,7 +38,7 @@ export default async function Home() {
             </a>
           </div>
         </AnimateOnScroll>
-        <ProductGrid products={featured} columns={2} />
+        <ProductGrid products={all} columns={2} />
       </section>
 
       <section className="bg-white py-16">
