@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
+import CategoryBrowser from "@/components/CategoryBrowser";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getFeaturedProducts } from "@/lib/store";
 import { Heart, ShieldCheck, PackageCheck, MessageCircle, Star, PawPrint } from "lucide-react";
@@ -14,7 +15,9 @@ export default async function Home() {
 
   return (
     <main className="flex-1">
-      <Hero />
+      <Hero /> 
+
+      <CategoryBrowser />
 
 <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <AnimateOnScroll>
