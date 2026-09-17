@@ -259,7 +259,7 @@ export default function ReviewsPage() {
         <div className="mt-16 rounded-2xl border border-stone-200 bg-stone-50 p-8 text-center">
           <AnimateOnScroll>
             <h2 className="text-2xl font-bold text-stone-900">
-              Tried Our Seeds?
+              Ready to Meet a New Friend?
             </h2>
             <p className="mt-2 text-stone-600">
               Share your experience and help other growers make informed decisions.

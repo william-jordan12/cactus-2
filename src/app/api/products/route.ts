@@ -52,8 +52,8 @@ export async function POST(req: Request) {
       : [];
 
     const result = await pool.query(
-      `INSERT INTO ssv_products (slug, name, category, price, image, images, description, details, featured, stock, rating, reviews)
-       VALUES ($1, $2, $3, $4, $5, $6::text[], $7, $8, $9, $10, $11, $12)
+      `INSERT INTO ssv_products (slug, name, category, price, image, images, description, details, featured, stock, rating, reviews, is_synced)
+       VALUES ($1, $2, $3, $4, $5, $6::text[], $7, $8, $9, $10, $11, $12, false)
        RETURNING slug`,
       [
         slug,

@@ -7,15 +7,23 @@ declare module "lucide-react" {
   export const AlertTriangle: Icon;
   export const ArrowLeft: Icon;
   export const ArrowRight: Icon;
+  export const Bird: Icon;
+  export const BellRing: Icon;
+  export const Bone: Icon;
   export const BookOpen: Icon;
+  export const Cat: Icon;
   export const Check: Icon;
   export const CheckCircle2: Icon;
   export const ChevronDown: Icon;
   export const ChevronRight: Icon;
   export const ChevronUp: Icon;
+  export const Dog: Icon;
   export const Droplets: Icon;
   export const Filter: Icon;
+  export const Fish: Icon;
   export const FlaskConical: Icon;
+  export const Heart: Icon;
+  export const HelpingHand: Icon;
   export const ImagePlus: Icon;
   export const KeyRound: Icon;
   export const Leaf: Icon;
@@ -31,6 +39,7 @@ declare module "lucide-react" {
   export const Package: Icon;
   export const PackageCheck: Icon;
   export const PackageOpen: Icon;
+  export const PawPrint: Icon;
   export const Pencil: Icon;
   export const Phone: Icon;
   export const Plus: Icon;
@@ -48,6 +57,7 @@ declare module "lucide-react" {
   export const ThumbsUp: Icon;
   export const Trash2: Icon;
   export const Truck: Icon;
+  export const Turtle: Icon;
   export const User: Icon;
   export const X: Icon;
 }

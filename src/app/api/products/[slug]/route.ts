@@ -53,7 +53,7 @@ export async function PUT(req: Request, { params }: Params) {
        WHERE slug = $12`,
       [
         name,
-        typeof body.category === "string" ? body.category : "cacti",
+        typeof body.category === "string" ? body.category : "dogs",
         price,
         typeof body.image === "string" ? body.image : "",
         images,

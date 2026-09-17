@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Truck, Leaf } from "lucide-react";
+import { ArrowRight, ShieldCheck, Heart, PawPrint } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -10,20 +10,20 @@ export default function Hero() {
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
         <div className="flex items-center gap-2 rounded-full border border-sage-300 bg-white/70 px-4 py-1.5 text-sm font-medium text-sage-800 backdrop-blur">
-          <Leaf className="h-4 w-4" />
-          Rare seeds shipped worldwide
+          <PawPrint className="h-4 w-4" />
+          Ethically bred &amp; vet-checked pets
         </div>
 
         <h1 className="mt-6 max-w-3xl text-4xl font-extrabold tracking-tight text-stone-900 sm:text-5xl lg:text-6xl">
-          Cultivate Your Desert{" "}
-          <span className="text-sage-700">Garden</span> in the{" "}
-          <span className="text-terracotta-600">Vault</span>
+          Find Your New{" "}
+          <span className="text-sage-700">Best</span>{" "}
+          <span className="text-terracotta-600">Friend</span>
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-stone-600">
-          Premium cactus and succulent seeds, hand-selected from growers
-          across the Southwest. From iconic Saguaro to the rarest Aztekium,
-          start your collection today.
+          Happy Tails brings you healthy, temperament-tested puppies, kittens,
+          bunnies, birds, fish, and reptiles — matched to your family with
+          lifetime support. Every pet is vet-checked before it comes home.
         </p>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -31,14 +31,14 @@ export default function Hero() {
             href="/shop"
             className="flex items-center justify-center gap-2 rounded-lg bg-terracotta-600 px-8 py-3.5 font-semibold text-white transition-colors hover:bg-terracotta-700"
           >
-            Shop All Seeds
+            Meet the Pets
             <ArrowRight className="h-5 w-5" />
           </Link>
           <Link
-            href="/about"
+            href="/about#adoption-guide"
             className="flex items-center justify-center gap-2 rounded-lg border border-stone-300 bg-white px-8 py-3.5 font-semibold text-stone-800 transition-colors hover:bg-stone-50"
           >
-            Learn How to Grow
+            How Adoption Works
           </Link>
         </div>
 
@@ -46,18 +46,18 @@ export default function Hero() {
           {[
             {
               icon: ShieldCheck,
-              title: "Trusted Quality",
-              desc: "98% germination rate",
+              title: "Vet-Checked",
+              desc: "Health records included",
             },
             {
-              icon: Truck,
-              title: "Discreet Shipping",
-              desc: "Sent worldwide",
+              icon: Heart,
+              title: "Temperament Tested",
+              desc: "Matched to your home",
             },
             {
-              icon: Leaf,
-              title: "Grower Support",
-              desc: "Guides included",
+              icon: PawPrint,
+              title: "Lifetime Support",
+              desc: "Advice, always",
             },
           ].map((item) => (
             <div

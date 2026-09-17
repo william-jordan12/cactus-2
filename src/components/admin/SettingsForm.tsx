@@ -103,7 +103,7 @@ export default function SettingsForm() {
               type="email"
               value={contactEmail}
               onChange={(e) => setContactEmail(e.target.value)}
-              placeholder="hello@saguaroseedvault.com"
+              placeholder="hello@happytailspetstore.com"
               className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900 focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-200"
             />
             <span className="mt-1 block text-xs text-stone-400">

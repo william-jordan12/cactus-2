@@ -30,8 +30,9 @@ export default function ContactPage() {
               We'd Love to Hear From You
             </h1>
             <p className="mt-6 text-lg text-stone-600">
-              Questions about an order, seed care, or a specific species? Send
-              us a message and our team will get back to you within 24 hours.
+              Questions about an adoption, pet care, or a specific breed or
+              species? Send us a message and our team will get back to you
+              within 24 hours.
             </p>
           </div>
         </div>
@@ -49,7 +50,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="font-medium text-stone-900">Email</p>
-                  <p className="text-stone-500">hello@saguaroseedvault.com</p>
+                  <p className="text-stone-500">hello@happytailspetstore.com</p>
                 </div>
               </li>
               <li className="flex items-start gap-4">
@@ -58,7 +59,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="font-medium text-stone-900">Phone</p>
-                  <p className="text-stone-500">+1 (800) SEED-VLT</p>
+                  <p className="text-stone-500">+1 (555) PET-TAIL</p>
                 </div>
               </li>
               <li className="flex items-start gap-4">
@@ -68,9 +69,9 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium text-stone-900">Location</p>
                   <p className="text-stone-500">
-                    1280 Desert Bloom Rd
+                    2754 Meadow Lane
                     <br />
-                    Tucson, AZ 85701
+                    Phoenix, AZ 85001
                   </p>
                 </div>
               </li>
@@ -161,9 +162,9 @@ export default function ContactPage() {
                   >
                     <option value="">Select a topic...</option>
                     <option>Order Status</option>
-                    <option>Seed Care & Growing</option>
-                    <option>Product Question</option>
-                    <option>Wholesale / Bulk</option>
+                    <option>Pet Care &amp; Health</option>
+                    <option>Adoption Question</option>
+                    <option>Wholesale / Partnerships</option>
                     <option>Other</option>
                   </select>
                 </div>

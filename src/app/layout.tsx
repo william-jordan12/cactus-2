@@ -18,22 +18,25 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Saguaro Seed Vault — Premium Cactus & Succulent Seeds",
-    template: "%s | Saguaro Seed Vault",
+    default: "Happy Tails Pet Store — Vet-Checked Puppies, Kittens & More",
+    template: "%s | Happy Tails Pet Store",
   },
   description:
-    "Premium cactus and succulent seeds shipped worldwide in discreet packaging. From iconic Saguaro to rare Aztekium, start your desert garden today.",
+    "Adopt your next best friend from Happy Tails Pet Store. Health-checked puppies, kittens, rabbits, birds, fish, and reptiles from trusted breeders and rescue partners.",
   keywords: [
-    "cactus seeds",
-    "succulent seeds",
-    "rare cactus",
-    "saguaro seeds",
-    "desert plants",
+    "pet store",
+    "puppies for sale",
+    "kittens for sale",
+    "bunnies",
+    "parrots",
+    "aquarium fish",
+    "reptiles for sale",
+    "adopt a pet",
   ],
   openGraph: {
-    title: "Saguaro Seed Vault — Premium Cactus & Succulent Seeds",
+    title: "Happy Tails Pet Store — Vet-Checked Puppies, Kittens & More",
     description:
-      "Premium cactus and succulent seeds shipped worldwide. Grow your desert collection today.",
+      "Ethically sourced, vet-checked pets adopted with lifetime support.",
     type: "website",
   },
 };

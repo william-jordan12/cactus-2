@@ -50,7 +50,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setLoaded(true);
 
     // Resolve cart item details against the live catalog (DB via API,
-    // falling back to the bundled seed data).
+    // falling back to the bundled catalog data).
     fetch("/api/products")
       .then((r) => r.json())
       .then((data) => {

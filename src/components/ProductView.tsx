@@ -91,9 +91,9 @@ export default function ProductView({
         </div>
 
           <div>
-            {product.category === "rare" && (
+            {product.featured && (
               <span className="inline-block rounded-full bg-terracotta-600 px-3 py-1 text-xs font-semibold text-white">
-                Rare &amp; Limited
+                Featured
               </span>
             )}
 
@@ -168,11 +168,11 @@ export default function ProductView({
             <div className="mt-8 grid grid-cols-3 gap-4 border-t border-stone-200 pt-6 text-center text-sm">
               <div>
                 <Truck className="mx-auto h-6 w-6 text-sage-700" />
-                <p className="mt-2 font-medium text-stone-800">Discreet Shipping</p>
+                <p className="mt-2 font-medium text-stone-800">Vet-Checked</p>
               </div>
               <div>
                 <ShieldCheck className="mx-auto h-6 w-6 text-sage-700" />
-                <p className="mt-2 font-medium text-stone-800">98% Germination</p>
+                <p className="mt-2 font-medium text-stone-800">Health Records</p>
               </div>
               <div>
                 <RotateCcw className="mx-auto h-6 w-6 text-sage-700" />

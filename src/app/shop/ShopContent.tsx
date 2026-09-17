@@ -4,11 +4,11 @@ import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductGrid from "@/components/ProductGrid";
 import type { Product, Category } from "@/lib/products";
-import { Leaf } from "lucide-react";
+import { PawPrint } from "lucide-react";
 
 type CategoryKey = Category | "all";
 
-const validKeys: CategoryKey[] = ["all", "cacti", "succulents", "rare", "tools"];
+const validKeys: CategoryKey[] = ["all", "dogs", "cats", "rabbits", "birds", "aquatic", "reptiles"];
 
 function ShopContentInner({
   products,
@@ -62,7 +62,7 @@ function ShopContentInner({
           Showing {filtered.length} {filtered.length === 1 ? "product" : "products"}
         </p>
         <p className="flex items-center gap-1.5 text-sm text-stone-400">
-          <Leaf className="h-4 w-4" />
+          <PawPrint className="h-4 w-4" />
           Free shipping over $50
         </p>
       </div>

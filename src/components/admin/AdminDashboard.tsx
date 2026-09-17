@@ -68,7 +68,7 @@ export default function AdminDashboard() {
           </h1>
           <div className="hidden items-center gap-2 text-stone-500 lg:flex">
             <Package className="h-5 w-5 text-sage-700" />
-            <span className="font-semibold text-stone-900">Saguaro Seed Vault</span>
+            <span className="font-semibold text-stone-900">Happy Tails Pet Store</span>
             <span className="text-stone-300">/</span>
             <span>Admin Dashboard</span>
           </div>

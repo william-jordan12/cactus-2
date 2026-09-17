@@ -54,10 +54,12 @@ const SCHEMA_SQL = [
     stock INTEGER DEFAULT 0,
     rating NUMERIC(2,1) DEFAULT 0,
     reviews INTEGER DEFAULT 0,
+    is_synced BOOLEAN DEFAULT true,
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
   )`,
   `ALTER TABLE ssv_products ADD COLUMN IF NOT EXISTS images TEXT[] DEFAULT '{}'`,
+  `ALTER TABLE ssv_products ADD COLUMN IF NOT EXISTS is_synced BOOLEAN DEFAULT true`,
   `CREATE TABLE IF NOT EXISTS ssv_admins (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,
@@ -162,20 +164,26 @@ async function seedSettings(client: PoolClient) {
 }
 
 async function seedCategoriesAndProducts(client: PoolClient) {
+  const seedCategorySlugs = seedCategories.map((c) => c.slug);
+  const seedProductSlugs = seedProducts.map((p) => p.slug);
+
   for (const c of seedCategories) {
     await client.query(
       `INSERT INTO ssv_categories (slug, name, description)
        VALUES ($1, $2, $3)
-       ON CONFLICT (slug) DO NOTHING`,
+       ON CONFLICT (slug) DO UPDATE SET
+         name = EXCLUDED.name,
+         description = EXCLUDED.description`,
       [c.slug, c.name, c.description]
     );
   }
   for (const p of seedProducts) {
     await client.query(
-      `INSERT INTO ssv_products (slug, name, category, price, image, description, details, featured, stock, rating, reviews)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      `INSERT INTO ssv_products (slug, name, category, price, image, description, details, featured, stock, rating, reviews, is_synced)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true)
        ON CONFLICT (slug) DO UPDATE SET
-         image = CASE WHEN ssv_products.image LIKE '/images/%' THEN EXCLUDED.image ELSE ssv_products.image END`,
+         image = CASE WHEN ssv_products.image LIKE '/images/%' THEN EXCLUDED.image ELSE ssv_products.image END,
+         is_synced = true`,
       [
         p.slug,
         p.name,
@@ -191,4 +199,15 @@ async function seedCategoriesAndProducts(client: PoolClient) {
       ]
     );
   }
+  await client.query(
+    `DELETE FROM ssv_products
+     WHERE is_synced = true AND NOT (slug = ANY($1::text[]))`,
+    [seedProductSlugs]
+  );
+  await client.query(
+    `DELETE FROM ssv_categories
+     WHERE NOT (slug = ANY($1::text[]))
+       AND slug NOT IN (SELECT DISTINCT category FROM ssv_products)`,
+    [seedCategorySlugs]
+  );
 }

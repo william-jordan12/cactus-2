@@ -36,7 +36,7 @@ interface ProductForm {
 const emptyForm: ProductForm = {
   name: "",
   slug: "",
-  category: "cacti",
+  category: "dogs",
   price: "",
   image: "",
   images: [],
@@ -152,7 +152,7 @@ export default function ProductsManager() {
           Products ({products.length})
         </h2>
         <button
-          onClick={() => setEditing({ ...emptyForm, category: categories[0]?.slug || "cacti" })}
+          onClick={() => setEditing({ ...emptyForm, category: categories[0]?.slug || "dogs" })}
           className="flex items-center gap-2 rounded-lg bg-sage-700 px-4 py-2 text-sm font-semibold text-white hover:bg-sage-800"
         >
           <Plus className="h-4 w-4" />
@@ -362,7 +362,7 @@ export default function ProductsManager() {
                     value={editing.details}
                     onChange={(e) => setEditing({ ...editing, details: e.target.value })}
                     className={inputCls}
-                    placeholder={"20 seeds per pack\n98% germination\nShips worldwide"}
+                    placeholder={"Vaccinated & dewormed\nTemperament tested\nHealth records included"}
                   />
                 </Field>
               </div>

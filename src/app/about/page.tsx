@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Leaf, Sprout, BookOpen, FlaskConical, Sun, Droplets } from "lucide-react";
+import { Heart, ShieldCheck, PawPrint, BookOpen, HelpingHand, BellRing, Bone } from "lucide-react";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 export default function AboutPage() {
@@ -13,14 +13,14 @@ export default function AboutPage() {
                 Our Story
               </p>
               <h1 className="mt-2 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
-                Growing Desert Passion, One Seed at a Time
+                Welcoming Pets Home, One Tail at a Time
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-stone-600">
-                Saguaro Seed Vault began in a small Tucson greenhouse with a
-                simple belief: everyone deserves to grow something extraordinary.
-                Today, we&apos;ve grown into a trusted source for rare and beautiful
-                cactus and succulent seeds, shipped to growers in over 40
-                countries.
+                Happy Tails Pet Store began in a small Phoenix home with a
+                simple belief: every pet deserves a loving home, and every home
+                deserves the right companion. Today, our care team has matched
+                over 12,000 healthy, vet-checked pets with families across the
+                country.
               </p>
             </div>
           </AnimateOnScroll>
@@ -31,19 +31,19 @@ export default function AboutPage() {
         <div className="grid gap-10 md:grid-cols-3 stagger-children">
           {[
             {
-              icon: Leaf,
+              icon: Heart,
               title: "Our Mission",
-              desc: "To make the wonder of desert horticulture accessible to everyone, from curious beginners to serious collectors — with seeds of the highest quality and the education to grow them successfully.",
+              desc: "To make finding a new best friend joyful and responsible — pairing healthy, well-socialized pets with homes where they'll thrive, supported by lifetime advice.",
             },
             {
-              icon: Sprout,
-              title: "Quality First",
-              desc: "Every seed is hand-selected, germination-tested, and packed in a climate-controlled facility. We never sell old inventory, and every pack includes detailed growing instructions.",
+              icon: ShieldCheck,
+              title: "Care-First Matching",
+              desc: "Every pet is vet-checked, vaccinated, and temperament-tested. We ask about your home and lifestyle so every adoption is a match, not just a sale.",
             },
             {
-              icon: FlaskConical,
-              title: "Responsible Sourcing",
-              desc: "We work only with ethical, sustainable growers. Rare species are propagated responsibly, and we never contribute to wild population endangerment.",
+              icon: PawPrint,
+              title: "Ethical Sourcing",
+              desc: "We work only with trusted breeders and rescue partners who raise animals in clean, social environments. Health records always included.",
             },
           ].map((item) => (
             <div key={item.title} className="hover-lift rounded-2xl border border-stone-200 bg-white p-8">
@@ -57,13 +57,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="growing-guides" className="bg-white py-16">
+      <section id="adoption-guide" className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll>
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold text-stone-900">Growing Guides</h2>
+              <h2 className="text-3xl font-bold text-stone-900">Adoption Guide</h2>
               <p className="mt-4 text-lg text-stone-600">
-                The essentials for turning a tiny seed into a thriving desert plant.
+                The essentials for welcoming a new pet into your home.
               </p>
             </div>
           </AnimateOnScroll>
@@ -71,40 +71,41 @@ export default function AboutPage() {
           <div className="mt-12 grid gap-8 md:grid-cols-3 stagger-children">
             <div className="hover-lift rounded-2xl border border-stone-200 bg-stone-50 p-8">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600">
-                <FlaskConical className="h-6 w-6" />
+                <BellRing className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-semibold text-stone-900">
-                Germination Basics
+                Preparing to Bring Home
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-stone-600">
-                Start with a sterile, well-draining mix. Surface-sow your seeds
-                and cover lightly. Keep warm (75–85°F) and consistently moist
-                but not waterlogged.
+                Set up a safe space with bedding, bowls, and age-appropriate
+                toys before pickup. Pet-proof the home and stock the right food
+                recommended by our team.
               </p>
             </div>
             <div className="hover-lift rounded-2xl border border-stone-200 bg-stone-50 p-8">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600">
-                <Sun className="h-6 w-6" />
+                <Bone className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-semibold text-stone-900">
-                Light &amp; Location
+                Feeding &amp; Care Basics
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-stone-600">
-                Provide bright, indirect light while seedlings establish.
-                Gradually introduce direct sun. A south- or west-facing
-                windowsill is ideal once plants mature.
+                Every adoption includes a species-specific care sheet. Keep a
+                consistent schedule, fresh water daily, and book a vet visit
+                within the first week home.
               </p>
             </div>
             <div className="hover-lift rounded-2xl border border-stone-200 bg-stone-50 p-8">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600">
-                <Droplets className="h-6 w-6" />
+                <HelpingHand className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-semibold text-stone-900">
-                Watering Wisdom
+                Training &amp; Bonding
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-stone-600">
-                Let soil dry fully between waterings. Always water deeply but
-                rarely. Reduce watering in winter dormancy to prevent rot.
+                Go slow for the first week. Use positive reinforcement, keep
+                routines predictable, and give your new friend space to settle.
+                We&apos;re always a call away for advice.
               </p>
             </div>
           </div>
@@ -116,7 +117,7 @@ export default function AboutPage() {
                 className="inline-flex items-center rounded-lg bg-sage-700 px-8 py-3.5 font-semibold text-white transition-colors hover:bg-sage-800"
               >
                 <BookOpen className="mr-2 h-5 w-5" />
-                Start Your Collection
+                Meet the Pets
               </a>
             </div>
           </AnimateOnScroll>

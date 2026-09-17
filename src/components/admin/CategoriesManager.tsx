@@ -91,7 +91,7 @@ export default function CategoriesManager() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full rounded-lg border border-stone-300 px-3 py-2.5 text-sm outline-none focus:border-sage-500"
-              placeholder="e.g. Cactus Seeds"
+              placeholder="e.g. Dogs"
             />
           </div>
           <div>
@@ -141,7 +141,7 @@ export default function CategoriesManager() {
                   <td className="px-4 py-3 text-right">
                     <button
                       onClick={() => handleDelete(c.slug)}
-                      disabled={["cacti", "succulents", "rare", "tools"].includes(c.slug)}
+                      disabled={["dogs", "cats", "rabbits", "birds", "aquatic", "reptiles"].includes(c.slug)}
                       className="rounded-lg border border-red-200 p-2 text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
                       aria-label="Delete"
                     >

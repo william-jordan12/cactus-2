@@ -10,7 +10,7 @@ const parse = (key) => {
 
 const dbUrl = process.env.DATABASE_URL || parse("DATABASE_URL");
 const adminEmail =
-  process.env.ADMIN_EMAIL || parse("ADMIN_EMAIL") || "hello@saguaroseedvault.com";
+  process.env.ADMIN_EMAIL || parse("ADMIN_EMAIL") || "hello@happytailspetstore.com";
 const password =
   process.env.ADMIN_INITIAL_PASSWORD ||
   parse("ADMIN_INITIAL_PASSWORD") ||

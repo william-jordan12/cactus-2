@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getFeaturedProducts } from "@/lib/store";
-import { Leaf, ShieldCheck, Sprout, PackageCheck, Star } from "lucide-react";
+import { Heart, ShieldCheck, PackageCheck, MessageCircle, Star, PawPrint } from "lucide-react";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
 
@@ -21,17 +21,17 @@ export default async function Home() {
           <div className="mb-10 flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div>
               <p className="text-sm font-semibold uppercase tracking-widest text-terracotta-600">
-                Hand-Picked
+                Meet Them
               </p>
               <h2 className="mt-2 text-3xl font-bold text-stone-900">
-                Featured Seeds
+                Featured Pets
               </h2>
             </div>
             <a
               href="/shop"
               className="text-sm font-semibold text-sage-700 hover:text-sage-800"
             >
-              View All Products →
+              View All Pets →
             </a>
           </div>
         </AnimateOnScroll>
@@ -42,32 +42,32 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll>
             <SectionHeading
-              eyebrow="Why Choose Us"
-              title="Seeds You Can Trust"
-              description="Every pack is hand-packed, humidity-controlled, and germination-tested by real growers."
+              eyebrow="Why Happy Tails"
+              title="Adopt With Confidence"
+              description="Every pet is vetted, temperament-tested, and matched to your home and lifestyle by our care team."
             />
           </AnimateOnScroll>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 stagger-children">
             {[
               {
-                icon: Sprout,
-                title: "Germination Tested",
-                desc: "98% average germination rate, guaranteed.",
+                icon: ShieldCheck,
+                title: "Vet-Checked",
+                desc: "All pets arrive vaccinated, dewormed, and with health records.",
               },
               {
-                icon: ShieldCheck,
-                title: "Safe & Discreet",
-                desc: "Packaged to protect your privacy, worldwide.",
+                icon: Heart,
+                title: "Matched to You",
+                desc: "We temperament-test every pet to fit your family and home.",
               },
               {
                 icon: PackageCheck,
-                title: "Fresh Stock",
-                desc: "Seeds harvested last season, never old inventory.",
+                title: "Healthy & Happy",
+                desc: "Hand-raised in clean, social environments, never warehoused.",
               },
               {
-                icon: Leaf,
-                title: "Grower Support",
-                desc: "Detailed guides with every single order.",
+                icon: MessageCircle,
+                title: "Lifetime Support",
+                desc: "Free advice from our team, for the entire life of your pet.",
               },
             ].map((item) => (
               <div
@@ -93,32 +93,33 @@ export default async function Home() {
             <div className="grid gap-8 p-8 md:grid-cols-2 md:p-12">
               <div>
                 <h2 className="text-3xl font-bold text-white">
-                  New to growing cacti from seed?
+                  New to bringing home a new pet?
                 </h2>
                 <p className="mt-4 text-sage-100">
-                  It&apos;s easier than you think. Learn our proven step-by-step
-                  germination method and watch your first spines emerge in weeks.
+                  It&apos;s easier than you think. Read our step-by-step
+                  adoption guide to prepare your home, meet the match, and
+                  build an instant bond with your new companion.
                 </p>
                 <a
-                  href="/about#growing-guides"
+                  href="/about#adoption-guide"
                   className="mt-6 inline-block rounded-lg bg-terracotta-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-terracotta-700"
                 >
-                  Read the Growing Guide
+                  Read the Adoption Guide
                 </a>
               </div>
               <div className="flex items-end gap-6 text-sage-200">
                 <div className="flex-1 rounded-t-2xl border-x border-t border-sage-700 bg-sage-700 p-6">
-                  <Star className="h-8 w-8 text-amber-400" />
+                  <PawPrint className="h-8 w-8 text-amber-400" />
                   <p className="mt-4 text-2xl font-bold text-white">
                     <CountUp end={12000} suffix="+" />
                   </p>
-                  <p className="text-sm text-sage-200">Happy growers</p>
+                  <p className="text-sm text-sage-200">Pets adopted</p>
                 </div>
                 <div className="flex-1 rounded-t-2xl border-x border-t border-sage-700 bg-sage-700 p-6 pt-10">
                   <p className="text-2xl font-bold text-white">
-                    <CountUp end={50} suffix="+" />
+                    <CountUp end={100} suffix="+" />
                   </p>
-                  <p className="text-sm text-sage-200">Seed varieties</p>
+                  <p className="text-sm text-sage-200">Breeds &amp; species</p>
                 </div>
                 <div className="flex-1 rounded-t-2xl border-x border-t border-sage-700 bg-sage-700 p-6 pt-10">
                   <p className="text-2xl font-bold text-white">

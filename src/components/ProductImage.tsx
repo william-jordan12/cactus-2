@@ -6,10 +6,12 @@ interface ProductImageProps {
 }
 
 const categoryColors: Record<string, { bg: string; accent: string; label: string }> = {
-  cacti: { bg: "#E8F0E5", accent: "#6B8F5E", label: "🌵" },
-  succulents: { bg: "#EAF4E8", accent: "#7C9A72", label: "🪴" },
-  rare: { bg: "#F4EADF", accent: "#C79A63", label: "✨" },
-  tools: { bg: "#EFEAE4", accent: "#A89A8C", label: "🌱" },
+  dogs: { bg: "#E9E7E2", accent: "#8C7A5B", label: "🐕" },
+  cats: { bg: "#F0ECEB", accent: "#A8826B", label: "🐈" },
+  rabbits: { bg: "#F3EEE8", accent: "#A98E77", label: "🐇" },
+  birds: { bg: "#EBF0F3", accent: "#6F8CA0", label: "🦜" },
+  aquatic: { bg: "#E7F0F4", accent: "#5E8CA0", label: "🐠" },
+  reptiles: { bg: "#EDF1E7", accent: "#7A8F62", label: "🦎" },
 };
 
 export default function ProductImage({

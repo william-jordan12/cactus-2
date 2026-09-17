@@ -114,7 +114,7 @@ export default function CheckoutPage() {
           </div>
           <h1 className="mt-6 text-2xl font-bold text-stone-900">Your cart is empty</h1>
           <p className="mt-3 text-stone-600">
-            Add some seeds to your cart before checking out.
+            Add a pet to your cart before checking out.
           </p>
           <Link
             href="/shop"
