@@ -8,13 +8,13 @@ export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
 
   return (
-    <div className="group hover-lift flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-shadow hover:shadow-lg">
+    <div className="group hover-lift flex h-full flex-col overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm transition-shadow hover:shadow-lg">
       <Link href={`/product/${product.slug}`} className="relative block">
         <ProductImage
           category={product.category}
           name={product.name}
           image={product.image}
-          className="h-56 w-full transition-transform duration-500 ease-out group-hover:scale-110"
+          className="aspect-square w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
         />
         {product.featured && (
           <span className="badge-pulse absolute left-3 top-3 rounded-full bg-terracotta-600 px-3 py-1 text-xs font-semibold text-white">
@@ -40,7 +40,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="text-stone-400">({product.reviews})</span>
         </div>
 
-        <div className="mt-3 flex items-center justify-between pt-3">
+        <div className="mt-auto flex items-center justify-between pt-3">
           <span className="text-lg font-bold text-stone-900">
             ${product.price.toFixed(2)}
           </span>
