@@ -38,7 +38,7 @@ export default async function Home() {
             </a>
           </div>
         </AnimateOnScroll>
-        <ProductGrid products={all} columns={2} />
+        <ProductGrid products={all} />
       </section>
 
       <section className="bg-white py-16">
