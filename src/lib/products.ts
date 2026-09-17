@@ -48,6 +48,176 @@ export const categories: { slug: Category; name: string; description: string }[]
   },
 ];
 
+export const speciesGroups: Record<Category, { label: string; slugs: string[] }[]> = {
+  dogs: [
+    {
+      label: "Herding & Working",
+      slugs: [
+        "german-shepherd",
+        "siberian-husky",
+        "rottweiler",
+        "doberman-pinscher",
+        "belgian-malinois",
+        "border-collie",
+        "australian-shepherd",
+      ],
+    },
+    {
+      label: "Sporting & Retriever",
+      slugs: [
+        "golden-retriever",
+        "labrador-retriever",
+        "cocker-spaniel",
+        "german-shorthaired-pointer",
+        "english-setter",
+      ],
+    },
+    {
+      label: "Companion & Toy",
+      slugs: [
+        "french-bulldog",
+        "standard-poodle",
+        "miniature-poodle",
+        "toy-poodle",
+        "chihuahua",
+        "dachshund",
+        "beagle",
+        "shih-tzu",
+        "yorkshire-terrier",
+        "pug",
+        "pomeranian",
+      ],
+    },
+  ],
+  cats: [
+    {
+      label: "Longhair Breeds",
+      slugs: ["maine-coon", "persian", "ragdoll", "norwegian-forest-cat", "birman", "himalayan"],
+    },
+    {
+      label: "Shorthair Breeds",
+      slugs: [
+        "domestic-shorthair",
+        "british-shorthair",
+        "american-shorthair",
+        "abyssinian",
+        "burmese",
+        "russian-blue",
+      ],
+    },
+    {
+      label: "Hybrid & Specialty Breeds",
+      slugs: ["siamese", "bengal", "sphynx", "scottish-fold", "oriental-shorthair"],
+    },
+  ],
+  rabbits: [
+    {
+      label: "Lop-Eared Breeds",
+      slugs: ["holland-lop", "mini-lop", "english-lop", "french-lop"],
+    },
+    {
+      label: "Dwarf Breeds",
+      slugs: ["netherland-dwarf", "dwarf-hotot", "polish-rabbit"],
+    },
+    {
+      label: "Fancy & Large Breeds",
+      slugs: [
+        "flemish-giant",
+        "lionhead",
+        "mini-rex",
+        "dutch-rabbit",
+        "english-angora",
+        "californian",
+        "new-zealand",
+      ],
+    },
+  ],
+  birds: [
+    {
+      label: "Small Parrots & Parakeets",
+      slugs: ["budgerigar", "cockatiel", "lovebird", "parrotlet", "quaker-parakeet"],
+    },
+    {
+      label: "Medium Parrots",
+      slugs: [
+        "green-cheeked-conure",
+        "sun-conure",
+        "indian-ringneck",
+        "caique",
+        "pionus",
+      ],
+    },
+    {
+      label: "Large Parrots",
+      slugs: ["african-grey", "amazon-parrot", "blue-gold-macaw", "scarlet-macaw", "cockatoo"],
+    },
+    {
+      label: "Songbirds & Finches",
+      slugs: ["canary", "zebra-finch", "gouldian-finch", "society-finch"],
+    },
+  ],
+  aquatic: [
+    {
+      label: "Freshwater Fish",
+      slugs: [
+        "betta",
+        "goldfish",
+        "neon-tetra",
+        "guppy",
+        "angelfish",
+        "corydoras-catfish",
+        "platy",
+        "molly",
+        "discus",
+        "oscar",
+      ],
+    },
+    {
+      label: "Freshwater Invertebrates",
+      slugs: [
+        "mystery-snail",
+        "nerite-snail",
+        "cherry-shrimp",
+        "ghost-shrimp",
+        "amano-shrimp",
+        "dwarf-crayfish",
+      ],
+    },
+    {
+      label: "Saltwater Fish",
+      slugs: ["clownfish", "blue-tang", "yellow-tang", "damselfish", "royal-gramma", "blenny", "goby"],
+    },
+  ],
+  reptiles: [
+    {
+      label: "Lizards",
+      slugs: [
+        "bearded-dragon",
+        "leopard-gecko",
+        "crested-gecko",
+        "blue-tongued-skink",
+        "veiled-chameleon",
+        "green-anole",
+      ],
+    },
+    {
+      label: "Snakes",
+      slugs: ["corn-snake", "ball-python", "milk-snake", "king-snake", "western-hognose"],
+    },
+    {
+      label: "Turtles & Tortoises",
+      slugs: [
+        "red-eared-slider",
+        "yellow-bellied-slider",
+        "eastern-box-turtle",
+        "russian-tortoise",
+        "hermanns-tortoise",
+        "sulcata-tortoise",
+      ],
+    },
+  ],
+};
+
 const groupImages: Record<Category, string[]> = {
   dogs: [
     "photo-1543466835-00a7907e9de1",
