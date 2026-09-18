@@ -40,15 +40,15 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="text-stone-400">({product.reviews})</span>
         </div>
 
-        <div className="mt-auto flex items-center justify-between pt-3">
-          <span className="text-lg font-bold text-stone-900">
+        <div className="mt-auto flex min-w-0 items-center justify-between gap-2 pt-3 sm:gap-3">
+          <span className="min-w-0 flex-shrink truncate text-sm font-bold text-stone-900 sm:text-base">
             ${product.price.toFixed(2)}
           </span>
           <button
             onClick={() => addToCart(product.slug)}
-            className="flex items-center gap-2 rounded-lg bg-sage-700 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
+            className="flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg bg-sage-700 px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-sage-800 sm:px-3 sm:py-2 sm:text-sm"
           >
-            <ShoppingBag className="h-4 w-4" />
+            <ShoppingBag className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             Add
           </button>
         </div>
