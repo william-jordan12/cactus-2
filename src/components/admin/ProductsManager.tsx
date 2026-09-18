@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import {
   Plus,
   Pencil,
@@ -10,7 +10,7 @@ import {
   X,
   Save,
 } from "lucide-react";
-import type { Product } from "@/lib/products";
+import type { Category, Product } from "@/lib/products";import { speciesGroups } from "@/lib/products";
 import ImageDropzone from "./ImageDropzone";
 
 interface CategoryOpt {
@@ -22,6 +22,7 @@ interface ProductForm {
   name: string;
   slug: string;
   category: string;
+  species: string;
   price: string;
   image: string;
   images: string[];
@@ -37,6 +38,7 @@ const emptyForm: ProductForm = {
   name: "",
   slug: "",
   category: "dogs",
+  species: "",
   price: "",
   image: "",
   images: [],
@@ -172,11 +174,24 @@ export default function ProductsManager() {
               <th className="px-4 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-stone-100">
-            {products.map((p) => (
-              <tr key={p.slug} className="hover:bg-stone-50">
-                <td className="px-4 py-3 font-medium text-stone-900">{p.name}</td>
-                <td className="px-4 py-3 capitalize text-stone-600">{p.category}</td>
+          <tbody>
+            {categories.map((cat) => {
+              const group = products.filter((p) => p.category === cat.slug);
+              if (group.length === 0) return null;
+              return (
+                <Fragment key={cat.slug}>
+                  <tr className="border-b border-t-2 border-stone-200 bg-stone-100">
+                    <td
+                      colSpan={6}
+                      className="px-4 py-2 font-semibold uppercase tracking-wide text-stone-600"
+                    >
+                      {cat.name} <span className="font-normal normal-case text-stone-400">({group.length})</span>
+                    </td>
+                  </tr>
+                  {group.map((p) => (
+                    <tr key={p.slug} className="hover:bg-stone-50">
+                      <td className="px-4 py-3 font-medium text-stone-900">{p.name}</td>
+                      <td className="px-4 py-3 capitalize text-stone-600">{p.category}</td>
                 <td className="px-4 py-3 font-semibold">${Number(p.price).toFixed(2)}</td>
                 <td className="px-4 py-3">{p.stock}</td>
                 <td className="px-4 py-3">
@@ -194,6 +209,7 @@ export default function ProductsManager() {
                           name: p.name,
                           slug: p.slug,
                           category: p.category,
+                          species: p.species ?? "",
                           price: String(p.price),
                           image: p.image || "",
                           images: p.images ?? [],
@@ -219,10 +235,13 @@ export default function ProductsManager() {
                     </button>
                   </div>
                 </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </tr>
+                ))}
+              </Fragment>
+            );
+          })}
+        </tbody>
+      </table>
       </div>
 
       {editing && (
@@ -279,6 +298,30 @@ export default function ProductsManager() {
                   ))}
                 </select>
               </Field>
+              {speciesGroups[editing.category as Category]?.length > 0 && (
+                <Field label="Species *">
+                  <select
+                    required
+                    value={editing.species}
+                    onChange={(e) => setEditing({ ...editing, species: e.target.value })}
+                    className={inputCls}
+                  >
+                    <option value="">Select species…</option>
+                    {speciesGroups[editing.category as Category].map((group) => (
+                      <optgroup key={group.label} label={group.label}>
+                        {group.slugs.map((slug) => (
+                          <option key={slug} value={slug}>
+                            {slug
+                              .split("-")
+                              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                              .join(" ")}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                  </select>
+                </Field>
+              )}
               <Field label="Price (USD) *">
                 <input
                   required

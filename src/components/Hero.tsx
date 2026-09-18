@@ -14,7 +14,7 @@ export default function Hero() {
           Ethically bred &amp; vet-checked pets
         </div>
 
-        <h1 className="mt-6 max-w-3xl text-4xl font-extrabold tracking-tight text-stone-900 sm:text-5xl lg:text-6xl">
+        <h1 className="animate-slide-in mt-6 max-w-3xl text-4xl font-extrabold tracking-tight text-stone-900 sm:text-5xl lg:text-6xl">
           Find Your New{" "}
           <span className="text-sage-700">Best</span>{" "}
           <span className="text-terracotta-600">Friend</span>
