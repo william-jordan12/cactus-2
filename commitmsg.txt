@@ -1,6 +1,0 @@
-feat: customer info + preferred payment method at checkout
-
-Checkout now collects billing address with a "Same as shipping
-address" checkbox, plus a Preferred Payment Method selector
-(10 methods), both included in the order POST body. Category
-browser shows real product photos.
