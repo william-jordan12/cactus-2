@@ -6,14 +6,18 @@ import { ChevronDown, PawPrint } from "lucide-react";
 import { categories, speciesGroups, getProductBySlug } from "@/lib/products";
 import AnimateOnScroll from "./AnimateOnScroll";
 
-const categoryIcons: Record<string, { emoji: string; bg: string }> = {
-  dogs: { emoji: "🐕", bg: "bg-stone-100" },
-  cats: { emoji: "🐈", bg: "bg-orange-100" },
-  rabbits: { emoji: "🐇", bg: "bg-pink-100" },
-  birds: { emoji: "🦜", bg: "bg-sky-100" },
-  aquatic: { emoji: "🐠", bg: "bg-teal-100" },
-  reptiles: { emoji: "🦎", bg: "bg-lime-100" },
+const categoryPhotos: Record<string, string> = {
+  dogs: "photo-1543466835-00a7907e9de1",
+  cats: "photo-1514888286974-6c03e2ca1dba",
+  rabbits: "photo-1585110396000-c9ffd4e4b308",
+  birds: "photo-1452570053594-1b985d6ea890",
+  aquatic: "photo-1522069169874-c58ec4b76be5",
+  reptiles: "photo-1546548970-71785318a17b",
 };
+
+const photoUrl = (id: string) =>
+  `https://images.unsplash.com/${id}?w=192&q=75&auto=format&fit=crop`;
+
 
 export default function CategoryBrowser() {
   const [open, setOpen] = useState<string | null>("dogs");
@@ -23,7 +27,7 @@ export default function CategoryBrowser() {
       {categories.map((cat) => {
         const groups = speciesGroups[cat.slug] ?? [];
         const count = groups.reduce((sum, g) => sum + g.slugs.length, 0);
-        const icon = categoryIcons[cat.slug] ?? { emoji: "🐾", bg: "bg-stone-100" };
+        const photo = categoryPhotos[cat.slug];
         const isOpen = open === cat.slug;
 
         return (
@@ -37,10 +41,19 @@ export default function CategoryBrowser() {
               className="flex w-full items-center gap-4 p-5 text-left transition-colors hover:bg-stone-50"
               aria-expanded={isOpen}
             >
-              <span
-                className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-2xl ${icon.bg}`}
-              >
-                {icon.emoji}
+              <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
+                {photo ? (
+                  <img
+                    src={photoUrl(photo)}
+                    alt={cat.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="flex h-full w-full items-center justify-center text-2xl">
+                    🐾
+                  </span>
+                )}
               </span>
               <span className="flex-1">
                 <span className="block font-semibold text-stone-900">

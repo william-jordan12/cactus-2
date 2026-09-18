@@ -21,6 +21,19 @@ export default function CheckoutPage() {
   const { cartDetails, subtotal, clearCart } = useCart();
   const [whatsappAvailable, setWhatsappAvailable] = useState(true);
   const [method, setMethod] = useState<"email" | "whatsapp">("whatsapp");
+  const [paymentMethod, setPaymentMethod] = useState<string>("Cash App");
+  const [paymentMethods, _setPaymentMethods] = useState<string[]>([
+    "Cash App",
+    "PayPal",
+    "Venmo",
+    "Zelle",
+    "Bitcoin",
+    "Apple Pay",
+    "Chime",
+    "Bank Transfer",
+    "Cryptocurrency (General)",
+    "Wire Transfer",
+  ]);
   const [form, setForm] = useState({
     customerName: "",
     email: "",
@@ -28,6 +41,10 @@ export default function CheckoutPage() {
     address: "",
     city: "",
     country: "",
+    billingAddress: "",
+    billingCity: "",
+    billingCountry: "",
+    sameAsBilling: true,
     notes: "",
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
@@ -47,7 +64,7 @@ export default function CheckoutPage() {
       });
   }, []);
 
-  function update(field: keyof typeof form, value: string) {
+  function update(field: keyof typeof form, value: string | boolean) {
     setForm((f) => ({ ...f, [field]: value }));
   }
 
@@ -62,6 +79,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           ...form,
           deliveryMethod: method,
+          paymentMethod,
           items: cartDetails.map(({ product, qty }) => ({
             slug: product.slug,
             qty,
@@ -211,6 +229,50 @@ export default function CheckoutPage() {
                   />
                 </div>
                 <div className="sm:col-span-2">
+                  <label className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      checked={form.sameAsBilling}
+                      onChange={(e) => update("sameAsBilling", e.target.checked)}
+                      className="mt-0.5 h-4 w-4 rounded border-stone-300 accent-sage-600"
+                    />
+                    <span className="text-sm text-stone-700">
+                      Billing address is the same as my shipping address
+                    </span>
+                  </label>
+                </div>
+                {!form.sameAsBilling && (
+                  <>
+                    <div className="sm:col-span-2">
+                      <Label>Billing Address</Label>
+                      <input
+                        value={form.billingAddress}
+                        onChange={(e) => update("billingAddress", e.target.value)}
+                        className={inputCls}
+                        placeholder="Billing street address"
+                      />
+                    </div>
+                    <div>
+                      <Label>Billing City</Label>
+                      <input
+                        value={form.billingCity}
+                        onChange={(e) => update("billingCity", e.target.value)}
+                        className={inputCls}
+                        placeholder="Scottsdale"
+                      />
+                    </div>
+                    <div>
+                      <Label>Billing Country</Label>
+                      <input
+                        value={form.billingCountry}
+                        onChange={(e) => update("billingCountry", e.target.value)}
+                        className={inputCls}
+                        placeholder="United States"
+                      />
+                    </div>
+                  </>
+                )}
+                <div className="sm:col-span-2">
                   <Label>Order Notes (optional)</Label>
                   <textarea
                     rows={3}
@@ -268,6 +330,32 @@ export default function CheckoutPage() {
                   WhatsApp checkout is not available yet — use email instead.
                 </p>
               )}
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-stone-200 bg-white p-6">
+              <h2 className="text-lg font-semibold text-stone-900">
+                Preferred Payment Method
+              </h2>
+              <p className="mt-1 text-sm text-stone-500">
+                Select how you'd like to pay once your order is confirmed.
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {paymentMethods.map((pm) => (
+                  <button
+                    key={pm}
+                    type="button"
+                    onClick={() => setPaymentMethod(pm)}
+                    aria-pressed={paymentMethod === pm}
+                    className={`flex items-center gap-3 rounded-xl border-2 p-4 text-left transition-colors ${
+                      paymentMethod === pm
+                        ? "border-terracotta-600 bg-terracotta-50"
+                        : "border-stone-200 hover:border-stone-300"
+                    }`}
+                  >
+                    <span className="font-medium text-stone-900">{pm}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {error && (
