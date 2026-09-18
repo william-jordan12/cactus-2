@@ -1,11 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [contactEmail, setContactEmail] = useState("hello@happytailspetstore.com");
+  const [whatsapp, setWhatsapp] = useState("+1 (555) PET-TAIL");
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!data?.settings) return;
+        if (data.settings.contactEmail) setContactEmail(data.settings.contactEmail);
+        if (data.settings.whatsapp) setWhatsapp(`+${data.settings.whatsapp}`);
+      })
+      .catch(() => {});
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -50,7 +63,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="font-medium text-stone-900">Email</p>
-                  <p className="text-stone-500">hello@happytailspetstore.com</p>
+                  <p className="text-stone-500">{contactEmail}</p>
                 </div>
               </li>
               <li className="flex items-start gap-4">
@@ -58,8 +71,8 @@ export default function ContactPage() {
                   <Phone className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="font-medium text-stone-900">Phone</p>
-                  <p className="text-stone-500">+1 (555) PET-TAIL</p>
+                  <p className="font-medium text-stone-900">WhatsApp</p>
+                  <p className="text-stone-500">{whatsapp}</p>
                 </div>
               </li>
               <li className="flex items-start gap-4">
