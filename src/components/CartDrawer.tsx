@@ -57,49 +57,57 @@ export default function CartDrawer() {
                 {cartDetails.map(({ product, qty }) => (
                   <li
                     key={product.slug}
-                    className="flex gap-4 border-b border-stone-100 pb-5"
+                    className="flex gap-4 border-b border-stone-100 py-5"
                   >
-                    <div className="h-20 w-20 shrink-0 overflow-hidden rounded-lg">
+                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-stone-100">
                       <ProductImage
                         category={product.category}
                         name={product.name}
+                        image={product.image}
                         className="h-full w-full"
                       />
+                      <span className="absolute inset-x-0 bottom-0 bg-stone-900/60 px-1.5 py-0.5 text-center text-[9px] font-bold uppercase tracking-wider text-white">
+                        {product.category.toUpperCase()}
+                      </span>
                     </div>
                     <div className="flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-2">
                         <Link
                           href={`/product/${product.slug}`}
                           onClick={() => setCartOpen(false)}
-                          className="text-sm font-medium text-stone-900 hover:text-sage-700"
+                          className="text-sm font-bold text-stone-900 hover:text-sage-700"
                         >
                           {product.name}
                         </Link>
                         <button
                           onClick={() => removeFromCart(product.slug)}
-                          className="text-stone-400 hover:text-red-500"
+                          className="shrink-0 rounded-full border border-stone-300 p-1.5 text-stone-400 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                           aria-label="Remove item"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
                       </div>
-                      <p className="mt-1 text-sm font-semibold text-sage-700">
+                      <p
+                        className="mt-1 text-sm font-semibold"
+                        style={{ color: "#2E5B33" }}
+                      >
                         ${product.price.toFixed(2)}
                       </p>
                       <div className="mt-2 flex items-center gap-2">
                         <button
                           onClick={() => updateQty(product.slug, qty - 1)}
-                          className="flex h-7 w-7 items-center justify-center rounded border border-stone-200 text-stone-600 hover:bg-stone-50"
+                          className="flex h-7 w-7 items-center justify-center rounded-full border border-stone-300 bg-stone-100 text-stone-600 transition-colors hover:bg-stone-200 disabled:opacity-40"
+                          disabled={qty <= 1}
                           aria-label="Decrease quantity"
                         >
                           <Minus className="h-3 w-3" />
                         </button>
-                        <span className="w-8 text-center text-sm font-medium">
+                        <span className="w-8 text-center text-sm font-semibold text-stone-900">
                           {qty}
                         </span>
                         <button
                           onClick={() => updateQty(product.slug, qty + 1)}
-                          className="flex h-7 w-7 items-center justify-center rounded border border-stone-200 text-stone-600 hover:bg-stone-50"
+                          className="flex h-7 w-7 items-center justify-center rounded-full border border-stone-300 bg-stone-100 text-stone-600 transition-colors hover:bg-stone-200"
                           aria-label="Increase quantity"
                         >
                           <Plus className="h-3 w-3" />
