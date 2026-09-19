@@ -1,4 +1,4 @@
-export type Category = "dogs" | "cats" | "rabbits" | "birds" | "aquatic" | "reptiles";
+export type Category = "dogs" | "cats" | "rabbits" | "birds" | "aquatic" | "reptiles" | "monkeys";
 
 export interface Product {
   slug: string;
@@ -46,6 +46,11 @@ export const categories: { slug: Category; name: string; description: string }[]
     slug: "reptiles",
     name: "Reptiles",
     description: "Fascinating lizards, snakes, turtles, and tortoises.",
+  },
+  {
+    slug: "monkeys",
+    name: "Monkeys",
+    description: "Intelligent, playful primates from agile capuchins to expressive spider monkeys.",
   },
 ];
 
@@ -217,6 +222,20 @@ export const speciesGroups: Record<Category, { label: string; slugs: string[] }[
       ],
     },
   ],
+  monkeys: [
+    {
+      label: "Captive-bred for temperament",
+      slugs: ["common-marmoset", "cotton-top-tamarin", "golden-lion-tamarin"],
+    },
+    {
+      label: "Clear dispositions & vet-checked",
+      slugs: ["white-faced-capuchin", "tufted-capuchin"],
+    },
+    {
+      label: "Active & social primates",
+      slugs: ["common-squirrel-monkey", "black-handed-spider-monkey", "mantled-howler-monkey"],
+    },
+  ],
 };
 
 const groupImages: Record<Category, string[]> = {
@@ -255,6 +274,12 @@ const groupImages: Record<Category, string[]> = {
     "photo-1548839140-29a749e1cf4d",
     "photo-1546548970-71785318a17b",
     "photo-1589829085413-56de8ae18c73",
+  ],
+  monkeys: [
+    "photo-1667147382221-061b512deae0",
+    "photo-1726165498985-893f324110e6",
+    "photo-1750101724698-42347d885f50",
+    "photo-1655981653307-4732d646c254",
   ],
 };
 
@@ -298,6 +323,12 @@ const categoryDetails: Record<Category, string[]> = {
     "Free health certificate",
     "Lifetime care support",
   ],
+  monkeys: [
+    "Socialized & handled regularly",
+    "Diet & enrichment plan included",
+    "Free vet health check",
+    "Lifetime primate care support",
+  ],
 };
 
 const defaultStock: Record<Category, number> = {
@@ -307,6 +338,7 @@ const defaultStock: Record<Category, number> = {
   birds: 6,
   aquatic: 20,
   reptiles: 8,
+  monkeys: 3,
 };
 
 function imageFor(category: Category, slug: string): string {
@@ -467,6 +499,7 @@ export const products: Product[] = [
   def("russian-tortoise", "Russian Tortoise", "reptiles", 150, "A small, active, desert tortoise with a sunny personality. Hardy, curious, and great for outdoor enclosures."),
   def("hermanns-tortoise", "Hermann's Tortoise", "reptiles", 200, "A beautiful, docile Mediterranean tortoise with a domed golden shell. A true garden companion."),
   def("sulcata-tortoise", "Sulcata Tortoise", "reptiles", 250, "The African spurred tortoise — a charismatic giant that needs space and sunshine. Amazing for dedicated keepers."),
+  def("common-marmoset", "Common Marmoset", "monkeys", 850, "A tiny, tufted-eared marmoset with owl-like eyes and endless curiosity. Charismatic, vocal, and surprisingly bold."),  def("cotton-top-tamarin", "Cotton-Top Tamarin", "monkeys", 950, "A White Crested cousin with a magnificent shock of white hair. Social, intelligent, and a joy to watch."),  def("golden-lion-tamarin", "Golden Lion Tamarin", "monkeys", 1200, "A flame-orange beauty from the Brazilian treetops. Rare, regal, and full of life.", { featured: true }),  def("white-faced-capuchin", "White-Faced Capuchin", "monkeys", 1500, "The clever tool-user with a pale face and sharp mind. Playful, curious, and endlessly entertaining.", { featured: true }),  def("tufted-capuchin", "Tufted Capuchin", "monkeys", 1300, "A sturdy, expressive capuchin with a neat crest. Bold, social, and quick to learn."),  def("common-squirrel-monkey", "Common Squirrel Monkey", "monkeys", 900, "A bright-eyed, golden-backed gregarious acrobat. High-energy, affectionate, and full of personality."),  def("black-handed-spider-monkey", "Black-Handed Spider Monkey", "monkeys", 1400, "Fearless acrobat with prehensile tail. Long-limbed, agile, and gracefully athletic."),  def("mantled-howler-monkey", "Mantled Howler Monkey", "monkeys", 1100, "A deep-voiced, settled primate with a majestic black mane. Calm, deliberate, and unmistakably regal."),
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {
