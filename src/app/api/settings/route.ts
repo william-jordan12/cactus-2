@@ -34,12 +34,20 @@ export async function PUT(req: Request) {
 
     let whatsapp = settingsFallback().whatsapp;
     let contactEmail = settingsFallback().contactEmail;
+    let phone = settingsFallback().phone;
+    let address = settingsFallback().address;
 
     if (typeof body.whatsapp === "string") {
       whatsapp = sanitizeWhatsApp(body.whatsapp);
     }
     if (typeof body.contactEmail === "string") {
       contactEmail = body.contactEmail.trim();
+    }
+    if (typeof body.phone === "string") {
+      phone = body.phone.trim();
+    }
+    if (typeof body.address === "string") {
+      address = body.address.trim();
     }
 
     if (whatsapp && !/^\d{7,15}$/.test(whatsapp)) {
@@ -59,7 +67,7 @@ export async function PUT(req: Request) {
     await pool.query(
       `INSERT INTO ssv_settings (key, value) VALUES ('whatsapp', $1), ('contact_email', $2), ('phone', $3), ('address', $4)
        ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()`,
-      [whatsapp, contactEmail]
+      [whatsapp, contactEmail, phone, address]
     );
 
     return NextResponse.json({
