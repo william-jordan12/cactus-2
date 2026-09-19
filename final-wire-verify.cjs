@@ -1,0 +1,12 @@
+const fs = require("fs");
+const b = fs.readFileSync("src/components/admin/SettingsForm.tsx", "utf8");
+console.log("REAL-PHONE-INPUT:", /id="settings-phone"/.test(b));
+console.log("REAL-ADDR-INPUT:", /id="settings-address"/.test(b));
+console.log("REAL-LOADER-PHONE:", /setPhone\(data\.settings\?\.phone \?\? ""\);/.test(b));
+console.log("REAL-LOADER-ADDRESS:", /setAddress\(data\.settings\?\.address \?\? ""\);/.test(b));
+console.log("REAL-SAVE-ALL4:", /JSON\.stringify\(\{ whatsapp, contactEmail, phone, address \}\)/.test(b));
+console.log("REAL-IMPORT-ICONS:", /Phone, MapPin/.test(b.split("\n").slice(0, 14).join("\n")));
+const hasP = /id="settings-phone"/.test(b) && /setPhone\(data\.settings\?\.phone \?\? ""\);/.test(b) && /setPhone\(/.test(b);
+const hasA = /id="settings-address"/.test(b) && /setAddress\(data\.settings\?\.address \?\? ""\);/.test(b) && /setAddress\(/.test(b);
+const saveOk = /JSON\.stringify\(\{ whatsapp, contactEmail, phone, address \}\)/.test(b);
+console.log("WIRE-OK:", hasP && hasA && saveOk);

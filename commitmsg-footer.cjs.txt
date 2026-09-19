@@ -1,0 +1,7 @@
+feat: footer contact (phone + location) now admin-editable
+
+The footer's phone, address, and email are no longer hardcoded:
+- SiteSettings model + env carry footerPhone/footerAddress fallbacks
+- getSettings() SELECTs and maps phone + address keys
+- PUT /api/settings persists phone + address alongside whatsapp/email
+- Footer renders {settings.phone} {settings.address} {settings.contactEmail}

@@ -1,0 +1,16 @@
+const fs = require("fs");
+const f = fs.readFileSync("src/components/Footer.tsx", "utf8");
+console.log("FOOTER-USE-CLIENT:", f.slice(0, 12));
+console.log("FOOTER-ASYNC:", /export default async function Footer/.test(f));
+console.log("FOOTER-CALLS-getSettings:", /await getSettings\(\)/.test(f));
+console.log("FOOTER-RENDER-phone:", /\{settings\.phone\}/.test(f));
+console.log("FOOTER-RENDER-address:", /\{settings\.address\}/.test(f));
+console.log("FOOTER-RENDER-email:", /\{settings\.contactEmail\}/.test(f));
+console.log("HARD-phone:", /\+1 \(555\) PET-TAIL/.test(f));
+console.log("HARD-address:", /Meadow Lane/.test(f));
+console.log("HARD-email:", /hello@(\[-\]|happytails)/.test(f) || /@happytails/.test(f));
+const imp = f.split("\n").find((l) => l.includes("getSettings"));
+console.log("IMPORT-LINE:", imp || "(none)");
+const api = fs.readFileSync("src/app/api/settings/route.ts", "utf8");
+console.log("API-PUT-phone:", /phone/.test(api));
+console.log("API-PUT-address:", /address/.test(api));

@@ -6,6 +6,9 @@ import { Save, Loader2, MessageCircle, Mail, User, Phone, MapPin } from "lucide-
 export default function SettingsForm() {
   const [whatsapp, setWhatsapp] = useState("");
   const [phone, setPhone] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [telegram, setTelegram] = useState("");
+  const [instagram, setInstagram] = useState("");
   const [address, setAddress] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [adminUsername, setAdminUsername] = useState("admin");
@@ -23,6 +26,9 @@ export default function SettingsForm() {
       setWhatsapp(data.settings?.whatsapp ?? "");
       setContactEmail(data.settings?.contactEmail ?? "");
       setPhone(data.settings?.phone ?? "");
+      setFacebook(data.settings?.facebook ?? "");
+      setTelegram(data.settings?.telegram ?? "");
+      setInstagram(data.settings?.instagram ?? "");
       setAddress(data.settings?.address ?? "");
       setAdminUsername(data.adminUsername ?? "admin");
     } catch (err) {
@@ -44,7 +50,7 @@ export default function SettingsForm() {
       const res = await fetch("/api/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ whatsapp, contactEmail, phone, address }),
+        body: JSON.stringify({ whatsapp, contactEmail, phone, address, facebook, telegram, instagram }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -145,6 +151,24 @@ export default function SettingsForm() {
                 Shown in the footer next to the phone + email contact block.
               </p>
             </label>
+            <label className="block">
+              <span className="flex items-center gap-2 text-sm font-medium text-stone-700">
+                Facebook URL
+              </span>
+              <input
+                id="settings-facebook"
+                type="url"
+                value={facebook}
+                onChange={(e) => setFacebook(e.target.value)}
+                className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900 focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-200"
+                placeholder="https://www.facebook.com/yourpage"
+              />
+              <span className="mt-1 block text-xs text-stone-400">
+                Footer Facebook icon opens this link.
+              </span>
+            </label>
+            <label className="block"><span className="flex items-center gap-2 text-sm font-medium text-stone-700">Telegram URL</span><input id="settings-telegram" type="url" value={telegram} onChange={(e) => setTelegram(e.target.value)} className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900 focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-200" placeholder="https://t.me/yourchannel" /><span className="mt-1 block text-xs text-stone-400">Footer Telegram icon opens this link.</span></label>
+            <label className="block"><span className="flex items-center gap-2 text-sm font-medium text-stone-700">Instagram URL</span><input id="settings-instagram" type="url" value={instagram} onChange={(e) => setInstagram(e.target.value)} className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900 focus:border-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-200" placeholder="https://www.instagram.com/yourhandle" /><span className="mt-1 block text-xs text-stone-400">Footer Instagram icon opens this link.</span></label>
 
           <div className="border-t border-stone-100 pt-5">
             <label className="block">

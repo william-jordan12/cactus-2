@@ -1,0 +1,9 @@
+const fs = require("fs");
+const p = "src/components/admin/SettingsForm.tsx";
+let b = fs.readFileSync(p, "utf8");
+const l = b.split("\n");
+console.log("ANCHOR-LOADER-EMAIL:", l.findIndex((x) => x.includes("setContactEmail(data.settings?.contactEmail ?? \"\");")) + 1);
+console.log("ANCHOR-ADMIN-HEAD:", l.findIndex((x) => x.includes("Admin Username")) + 1);
+console.log("ANCHOR-CONTACT-LABEL:", l.findIndex((x) => x.includes('Contact Email')) + 1);
+console.log("ANCHOR-PHONE-LABEL:", l.findIndex((x) => x.includes('Phone Number')) + 1);
+console.log("ANCHOR-ADDRESS-LABEL:", l.findIndex((x) => x.includes('Location')) + 1);

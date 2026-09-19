@@ -1,0 +1,14 @@
+const fs = require("fs");
+const b = fs.readFileSync("src/lib/settings.ts", "utf8");
+console.log("===LINES-17-48===");
+b.split("\n").slice(16, 48).forEach((l, i) => console.log(17 + i + ": " + l));
+console.log("===HAS-SELECT:phone/address===");
+console.log("SELECT-phone:", /'phone'/.test(b));
+console.log("SELECT-address:", /'address'/.test(b));
+console.log("HAS-map-phone:", /map\.get\("phone"\)/.test(b));
+console.log("HAS-map-address:", /map\.get\("address"\)/.test(b));
+const f = fs.readFileSync("src/components/Footer.tsx", "utf8");
+console.log("===FOOTER===");
+console.log("HAS-getSettings-import:", /from\s*["']@\/lib\/settings["']/.test(f));
+console.log("HAS-getSettings-call:", /getSettings\(\)/.test(f));
+console.log("HAS-301-703-address:", /301\{|551|Meadow/.test(f));

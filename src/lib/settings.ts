@@ -5,7 +5,9 @@ export interface SiteSettings {
   whatsapp: string;
   contactEmail: string;
   phone: string;
-  address: string;
+  address: string;  facebook: string;
+  telegram: string;
+  instagram: string;
 }
 
 export function sanitizeWhatsApp(value: string): string {
@@ -22,6 +24,9 @@ export function settingsFallback(): SiteSettings {
     contactEmail: env.contactEmail,
     phone: env.footerPhone,
     address: env.footerAddress,
+    facebook: "https://www.facebook.com/petssmartys/",
+    telegram: "https://t.me/petssmartys",
+    instagram: "https://www.instagram.com/petssmartys/"
   };
 }
 
@@ -30,7 +35,7 @@ export async function getSettings(): Promise<SiteSettings> {
   try {
     await initDb();
     const result = await getPool().query(
-      `SELECT key, value FROM ssv_settings WHERE key IN ('whatsapp', 'contact_email', 'phone', 'address')`
+      `SELECT key, value FROM ssv_settings WHERE key IN ('whatsapp', 'contact_email', 'phone', 'address', 'facebook', 'telegram', 'instagram')`
     );
     const map = new Map<string, string>();
     for (const row of result.rows) {
@@ -42,6 +47,9 @@ export async function getSettings(): Promise<SiteSettings> {
       contactEmail: map.get("contact_email") || fallback.contactEmail,
       phone: map.get("phone") || fallback.phone,
       address: map.get("address") || fallback.address,
+      facebook: map.get("facebook") || fallback.facebook,
+      telegram: map.get("telegram") || fallback.telegram,
+      instagram: map.get("instagram") || fallback.instagram,
     };
   } catch (err) {
     console.error("getSettings error", err);

@@ -1,0 +1,11 @@
+const fs = require("fs");
+const e = fs.readFileSync("src/lib/env.ts", "utf8");
+console.log("ENV-HAS-footerPhone:", /footerPhone/.test(e));
+console.log("ENV-HAS-footerAddress:", /footerAddress/.test(e));
+const s = fs.readFileSync("src/lib/settings.ts", "utf8");
+console.log("SETTINGS-SELECT-4KEYS:", /key IN \('whatsapp', 'contact_email', 'phone', 'address'\)/.test(s));
+console.log("SETTINGS-SELECT-2KEYS:", /key IN \('whatsapp', 'contact_email'\)/.test(s));
+console.log("===SETTINGS-19-27===");
+s.split("\n").slice(18, 27).forEach((x, i) => console.log(19 + i + ": " + x));
+console.log("===SETTINGS-40-48===");
+s.split("\n").slice(39, 48).forEach((x, i) => console.log(40 + i + ": " + x));

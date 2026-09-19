@@ -1,0 +1,12 @@
+const fs = require("fs");
+const p = "src/app/api/settings/route.ts";
+const b = fs.readFileSync(p, "utf8");
+const l = b.split("\n");
+const put = l.findIndex((x) => x.includes("export async function PUT"));
+const iinsert = l.findIndex((x) => x.includes("INSERT INTO settings"));
+const ibind = l.findIndex((x) => x.includes("[whatsapp, contactEmail]"));
+console.log("PUT-LINE:", put + 1);
+console.log("INSERT-LINE:", iinsert + 1, iinsert >= 0 ? l[iinsert].trim() : "-");
+console.log("INSERT-NEXT:", iinsert + 2, l[iinsert + 1] || "-");
+console.log("BIND-LINE:", ibind + 1, ibind >= 0 ? l[ibind].trim() : "-");
+console.log("BIND-NEXT:", l[ibind + 1] || "-");

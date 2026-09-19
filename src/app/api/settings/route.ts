@@ -36,6 +36,9 @@ export async function PUT(req: Request) {
     let contactEmail = settingsFallback().contactEmail;
     let phone = settingsFallback().phone;
     let address = settingsFallback().address;
+    let facebook = settingsFallback().facebook;
+    let telegram = settingsFallback().telegram;
+    let instagram = settingsFallback().instagram;
 
     if (typeof body.whatsapp === "string") {
       whatsapp = sanitizeWhatsApp(body.whatsapp);
@@ -48,6 +51,15 @@ export async function PUT(req: Request) {
     }
     if (typeof body.address === "string") {
       address = body.address.trim();
+    }
+    if (typeof body.facebook === "string") {
+      facebook = body.facebook.trim();
+    }
+    if (typeof body.telegram === "string") {
+      telegram = body.telegram.trim();
+    }
+    if (typeof body.instagram === "string") {
+      instagram = body.instagram.trim();
     }
 
     if (whatsapp && !/^\d{7,15}$/.test(whatsapp)) {
@@ -65,9 +77,9 @@ export async function PUT(req: Request) {
 
     const pool = getPool();
     await pool.query(
-      `INSERT INTO ssv_settings (key, value) VALUES ('whatsapp', $1), ('contact_email', $2), ('phone', $3), ('address', $4)
+      `INSERT INTO ssv_settings (key, value) VALUES ('whatsapp', $1), ('contact_email', $2), ('phone', $3), ('address', $4), ('facebook', $5), ('telegram', $6), ('instagram', $7)
        ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()`,
-      [whatsapp, contactEmail, phone, address]
+      [whatsapp, contactEmail, phone, address, facebook, telegram, instagram]
     );
 
     return NextResponse.json({

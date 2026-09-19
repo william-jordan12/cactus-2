@@ -1,0 +1,12 @@
+const fs = require("fs");
+const b = fs.readFileSync("src/components/admin/SettingsForm.tsx", "utf8");
+const l = b.split("\n");
+console.log("TOTAL:", l.length);
+console.log("===FIND-LOADER===");
+const loaderIdx = l.findIndex((x) => x.includes("data.settings?.contactEmail"));
+console.log("LOADER-REGION-FROM:", loaderIdx + 1);
+l.slice(loaderIdx, loaderIdx + 14).forEach((x, i) => console.log(loaderIdx + 1 + i + ": " + x));
+console.log("===FIND-PHONE-INPUT===");
+const phIdx = l.findIndex((x) => /id="settings-phone"/.test(x));
+console.log("PHONE-INPUT-LINE:", phIdx + 1);
+l.slice(phIdx - desktop, phIdx + 3).forEach;

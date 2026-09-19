@@ -1,0 +1,11 @@
+const fs = require("fs");
+const b = fs.readFileSync("src/components/Footer.tsx", "utf8");
+const l = b.split("\n");
+console.log("TOTAL", l.length);
+console.log("HAS-BIND:", /const settings = await getSettings\(\);/.test(b));
+console.log("HAS-ASYNC-FN:", /export default async function Footer\(\)/.test(b));
+console.log("HAS-USE-CLIENT:", b.startsWith('"use client"') || b.includes("use client"));
+console.log("===1-14===");
+l.slice(0, 14).forEach((x, i) => console.log(i + 1 + ": " + x));
+console.log("===68-109===");
+l.slice(67, 109).forEach((x, i) => console.log(68 + i + ": " + x));

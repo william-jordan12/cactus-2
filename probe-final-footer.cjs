@@ -1,0 +1,10 @@
+const fs = require("fs");
+const b = fs.readFileSync("src/components/Footer.tsx", "utf8");
+const l = b.split("\n");
+console.log("IMPORT-LINE:", l[1]);
+console.log("USES-PawPrint:", /<PawPrint/.test(b));
+console.log("USES-Copy:", /<Copy/.test(b));
+console.log("USES-MessageCircle:", /<MessageCircle/.test(b));
+console.log("INSTAGRAM-LEFTOVER:", /Instagram/.test(b));
+console.log("FACEBOOK-LEFTOVER:", /Facebook/.test(b));
+console.log("SHARE-LEFTOVER:", /Share\b/.test(b));

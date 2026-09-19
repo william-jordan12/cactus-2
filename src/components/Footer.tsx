@@ -71,7 +71,7 @@ export default async function Footer() {
                 </svg>
               </a>
               <a
-                href="https://www.facebook.com/petssmartys/"
+                href={settings.facebook || "https://www.facebook.com/petssmartys/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -83,7 +83,7 @@ export default async function Footer() {
                 </svg>
               </a>
               <a
-                href="https://t.me/petssmartys"
+                href={settings.telegram || "https://t.me/petssmartys"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Telegram"

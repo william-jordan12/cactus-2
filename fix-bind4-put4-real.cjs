@@ -1,0 +1,30 @@
+const fs = require("fs");
+const p = "src/app/api/settings/route.ts";
+let b = fs.readFileSync(p, "utf8");
+const a1 = "  let whatsapp = settingsFallback().whatsapp;";
+const a2 = "  let contactEmail = settingsFallback().contactEmail;";
+const a3 = '    if (typeof body.contactEmail === "string") {\n      contactEmail = body.contactEmail.trim();\n    }';
+const aBind = "      [whatsapp, contactEmail]\n    );";
+const aRead = /typeof body\.phone === "string"/;
+const c1 = b.includes(a1) && b.includes(a2) && b.includes(a3) && b.includes(aBind);
+console.log("C1:", c1023);
+const needLet = "  let phone = settingsFallback().phone;\n  let address = settingsFallback().address;";
+const needRead = '\n    if (typeof body.phone === "string") {\n      phone = body.phone.trim();\n    }\n    if (typeof body.address === "string") {\n      address = body.address.trim();\n    }';
+const needBind = "      [whatsapp, contactEmail, phone, address]\n    );";
+let w = false;
+if (c1 && !/let phone = settingsFallback\(\)\.phone;/.test(b)) {
+  b = b.replace(a2, a2 + "\n" + needLet);
+  b = b.replace(a3, a3 + needRead);
+  b = b.replace(aBind, needBind);
+  b = b.replace(/if \(whatsapp && !\/\^\\d\{7,15\}$\/\.test\(whatsapp\)\)/, "if (whatsapp && !/^\\d{7,15}$/.test(whatsapp))");
+  fs.writeFileSync(p, b);
+  w = true;
+}
+const v = fs.readFileSync(p, "utf8");
+console.log("WROTE:", w012);
+console.log("V-LET-PHONE:", /let phone = settingsFallback\(\)\.phone;/.test(v));
+console.log("V-LET-ADDR:", /let address = settingsFallback\(\)\.address;/.test(v));
+console.log("V-READ-PHONE:", /typeof body\.phone === "string"/.test(v));
+console.log("V-READ-ADDR:", /typeof body\.address === "string"/.test(v));
+console.log("V-BIND4:", /\[whatsapp, contactEmail, phone, address\]/.test(v));
+console.log("V-ONLY-ONE-LET-PHONE:", (v.match(/let phone = settingsFallback\(\)\.phone;/g) || []).length === 1);

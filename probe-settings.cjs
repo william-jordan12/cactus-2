@@ -1,0 +1,10 @@
+const fs = require("fs");
+const b = fs.readFileSync("src/lib/settings.ts", "utf8");
+console.log("USE-CLIENT:", b.slice(0, 12));
+console.log("HAS-phone-field:", /\n\s*phone:\s*string;/.test(b));
+console.log("HAS-address-field:", /\n\s*address:\s*string;/.test(b));
+console.log("HAS-whatsapp:", /\n\s*whatsapp:\s*string;/.test(b));
+console.log("HAS-contactEmail:", /\n\s*contactEmail:\s*string;/.test(b));
+console.log("FALLBACK-block:");
+const m = b.match(/export function settingsFallback\(\)[\s\S]*?\n}/);
+console.log(m ? m[0] : "NO-FALLBACK");

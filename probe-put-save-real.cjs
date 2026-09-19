@@ -1,0 +1,20 @@
+const fs = require("fs");
+const route = "src/app/api/settings/route.ts";
+const form = "src/components/admin/SettingsForm.tsx";
+const r = fs.readFileSync(route, "utf8");
+const f = fs.readFileSync(form, "utf8");
+console.log("ROUTE-LINES:", r.split("\n").length课);
+console.log("===PUT-METHOD===");
+const rl = r.split("\n");
+const putStart = rl.findIndex((x) => /export async function PUT/.test(x));
+console.log("PUT-START:", putStart + 1);
+if (putStart >= 0) rl.slice(putStart, putStart + 60).forEach((x, i) => {
+  if (/whatsapp|contactEmail|phone|address|json\(|parse\[|INSERT|VALUES|\(|\)|\$[0-9]/.test(x)) console.log(putStart + i + 1 + ": " + x);
+});
+console.log("===FORM-SAVE-BODY===");
+const fl = f.split("\n");
+const sb = fl.findIndex((x) => /JSON\.stringify/.test(x));
+console.log("SAVE-BODY-LINE:", sb + 1);
+fl.slice(sb - 2, sb + 2).forEach((x, i) => console.log(sb - 1 + i + ": " + x));
+console.log("===FORM-FETCH-URL===");
+fl.forEach((x, i) => { if (/\/api\/settings/.test(x)) console.log(i + 1 + ": " + x.trim()); });

@@ -1,0 +1,13 @@
+const fs = require("fs");
+const f = fs.readFileSync("src/components/admin/SettingsForm.tsx", "utf8");
+console.log("===USECLIENT===", f.startsWith('"use client"'));
+console.log("===TAGS===");
+console.log("HAS-whatsapp-label:", /whatsapp/i.test(f));
+console.log("HAS-contactEmail-label:", /contactEmail/.test(f));
+console.log("HAS-phone-label:", /Phone Number|settings-phone|setPhone/.test(f));
+console.log("HAS-address-label:", /Location|settings-address|setAddress/.test(f));
+const l = f.split("\n");
+console.log("===20-45 (loader)===");
+l.slice(19, 45).forEach((x, i) => console.log(20 + i + ": " + x));
+console.log("===100-170 (inputs)===");
+l.slice(99, 170).forEach((x, i) => console.log(100 + i + ": " + x));
