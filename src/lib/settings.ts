@@ -4,6 +4,8 @@ import { env } from "./env";
 export interface SiteSettings {
   whatsapp: string;
   contactEmail: string;
+  phone: string;
+  address: string;
 }
 
 export function sanitizeWhatsApp(value: string): string {
@@ -18,6 +20,8 @@ export function settingsFallback(): SiteSettings {
   return {
     whatsapp: sanitizeWhatsApp(env.adminWhatsApp),
     contactEmail: env.contactEmail,
+    phone: env.footerPhone,
+    address: env.footerAddress,
   };
 }
 
@@ -26,7 +30,7 @@ export async function getSettings(): Promise<SiteSettings> {
   try {
     await initDb();
     const result = await getPool().query(
-      `SELECT key, value FROM ssv_settings WHERE key IN ('whatsapp', 'contact_email')`
+      `SELECT key, value FROM ssv_settings WHERE key IN ('whatsapp', 'contact_email', 'phone', 'address')`
     );
     const map = new Map<string, string>();
     for (const row of result.rows) {
@@ -36,6 +40,8 @@ export async function getSettings(): Promise<SiteSettings> {
     return {
       whatsapp: map.get("whatsapp") || fallback.whatsapp,
       contactEmail: map.get("contact_email") || fallback.contactEmail,
+      phone: map.get("phone") || fallback.phone,
+      address: map.get("address") || fallback.address,
     };
   } catch (err) {
     console.error("getSettings error", err);
