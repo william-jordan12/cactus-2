@@ -1,10 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Save, Loader2, MessageCircle, Mail, User } from "lucide-react";
+import { Save, Loader2, MessageCircle, Mail, User, Phone, MapPin } from "lucide-react";
 
 export default function SettingsForm() {
   const [whatsapp, setWhatsapp] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [adminUsername, setAdminUsername] = useState("admin");
   const [loading, setLoading] = useState(true);
@@ -20,6 +22,8 @@ export default function SettingsForm() {
       const data = await res.json();
       setWhatsapp(data.settings?.whatsapp ?? "");
       setContactEmail(data.settings?.contactEmail ?? "");
+      setPhone(data.settings?.phone ?? "");
+      setAddress(data.settings?.address ?? "");
       setAdminUsername(data.adminUsername ?? "admin");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load settings.");
@@ -40,7 +44,7 @@ export default function SettingsForm() {
       const res = await fetch("/api/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ whatsapp, contactEmail }),
+        body: JSON.stringify({ whatsapp, contactEmail, phone, address }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -110,6 +114,37 @@ export default function SettingsForm() {
               Shown to customers and used for email orders (mailto links).
             </span>
           </label>
+            <label className="block">
+              <span className="flex items-center gap-2 text-sm font-medium text-stone-700">
+                <Phone className="h-4 w-4 text-sage-700" />
+                Phone Number
+              </span>
+              <input
+                id="settings-phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+1 (555) PET-TAIL"
+                className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900"
+              />
+            </label>
+            <label className="block">
+              <span className="flex items-center gap-2 text-sm font-medium text-stone-700">
+                <MapPin className="h-4 w-4 text-sage-700" />
+                Store Location / Address
+              </span>
+              <input
+                id="settings-address"
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="2754 Meadow Lane, Phoenix, AZ 85001"
+                className="mt-1.5 w-full rounded-lg border border-stone-300 px-4 py-2.5 text-stone-900"
+              />
+              <p className="mt-1 text-xs text-stone-400">
+                Shown in the footer next to the phone + email contact block.
+              </p>
+            </label>
 
           <div className="border-t border-stone-100 pt-5">
             <label className="block">
