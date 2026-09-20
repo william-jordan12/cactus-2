@@ -44,7 +44,7 @@ export default function AdminLogin() {
         </div>
         <h1 className="mt-4 text-2xl font-bold text-stone-900">Admin Login</h1>
         <p className="mt-1 text-sm text-stone-500">
-          Sign in to manage Happy Tails Pet Store.
+          Sign in to manage floyd raphael pet store.
         </p>
 
         {error && (

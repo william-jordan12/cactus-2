@@ -45,7 +45,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll>
             <SectionHeading
-              eyebrow="Why Happy Tails"
+              eyebrow="Why floyd raphael pet store"
               title="Adopt With Confidence"
               description="Every pet is vetted, temperament-tested, and matched to your home and lifestyle by our care team."
             />

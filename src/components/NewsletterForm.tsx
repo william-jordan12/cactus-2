@@ -20,7 +20,7 @@ export default function NewsletterForm() {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 py-10 sm:px-6 md:flex-row md:gap-10 lg:px-8">
         <div className="max-w-xl text-center md:text-left">
           <h3 className="text-2xl font-bold text-white">
-            Join the Happy Tails Newsletter
+            Join the floyd raphael pet store Newsletter
           </h3>
           <p className="mt-2 text-sm text-sage-100">
             Get 10% off your first adoption, pet care tips, and first notice of

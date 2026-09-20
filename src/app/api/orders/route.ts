@@ -147,7 +147,7 @@ export async function POST(req: Request) {
       : "Cash App";
 
     const message =
-      `I would like to complete my payment for an order on Happy Tails Pet Store.%0A%0A` +
+      `I would like to complete my payment for an order on floyd raphael pet store.%0A%0A` +
       `Order ID: #${reference}%0A` +
       `Payment Method: ${paymentMethod}%0A` +
       `Total: ${subtotal.toFixed(2)}%0A%0A` +

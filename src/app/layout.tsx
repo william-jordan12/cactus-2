@@ -18,11 +18,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Happy Tails Pet Store — Vet-Checked Puppies, Kittens & More",
-    template: "%s | Happy Tails Pet Store",
+    default: "floyd raphael pet store — Vet-Checked Puppies, Kittens & More",
+    template: "%s | floyd raphael pet store",
   },
   description:
-    "Adopt your next best friend from Happy Tails Pet Store. Health-checked puppies, kittens, rabbits, birds, fish, and reptiles from trusted breeders and rescue partners.",
+    "Adopt your next best friend from floyd raphael pet store. Health-checked puppies, kittens, rabbits, birds, fish, and reptiles from trusted breeders and rescue partners.",
   keywords: [
     "pet store",
     "puppies for sale",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     "adopt a pet",
   ],
   openGraph: {
-    title: "Happy Tails Pet Store — Vet-Checked Puppies, Kittens & More",
+    title: "floyd raphael pet store — Vet-Checked Puppies, Kittens & More",
     description:
       "Ethically sourced, vet-checked pets adopted with lifetime support.",
     type: "website",

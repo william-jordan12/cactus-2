@@ -16,7 +16,7 @@ export default function AboutPage() {
                 Welcoming Pets Home, One Tail at a Time
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-stone-600">
-                Happy Tails Pet Store began in a small Phoenix home with a
+                floyd raphael pet store began in a small Phoenix home with a
                 simple belief: every pet deserves a loving home, and every home
                 deserves the right companion. Today, our care team has matched
                 over 12,000 healthy, vet-checked pets with families across the

@@ -67,7 +67,7 @@ export default function Hero() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={photoUrl(s.photo)}
-              alt={`Happy Tails ${s.label}`}
+              alt={`floyd raphael pet store ${s.label}`}
               loading={i === 0 ? "eager" : "lazy"}
               className="h-full w-full object-cover"
             />
@@ -105,7 +105,7 @@ export default function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/85">
-          Happy Tails brings you healthy, temperament-tested puppies, kittens,
+          floyd raphael pet store brings you healthy, temperament-tested puppies, kittens,
           bunnies, birds, fish, and reptiles — matched to your family with
           lifetime support. Every pet is vet-checked before it comes home.
         </p>

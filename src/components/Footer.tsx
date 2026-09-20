@@ -14,7 +14,7 @@ export default async function Footer() {
             </div>
             <div>
               <p className="font-display text-xl font-bold tracking-tight text-white">
-                Happy Tails
+                floyd raphael pet store
               </p>
               <p className="text-xs uppercase tracking-widest text-sage-400">
                 Pet Store
@@ -140,7 +140,7 @@ export default async function Footer() {
         </div>
       </div>
       <div className="border-t border-sage-800/60 py-5 text-center text-xs text-sage-400">
-        © {new Date().getFullYear()} Happy Tails Pet Store. All rights reserved.
+        © {new Date().getFullYear()} floyd raphael pet store. All rights reserved.
       </div>
     </footer>
   );
