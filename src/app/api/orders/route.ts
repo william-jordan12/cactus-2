@@ -142,12 +142,21 @@ export async function POST(req: Request) {
     const itemsBlock =
       lineItems.map((it) => `• ${it.qty} x ${it.name} — $${(it.price * it.qty).toFixed(2)}`).join("%0A");
 
+    const paymentMethod = typeof body.paymentMethod === "string" && body.paymentMethod.trim()
+      ? body.paymentMethod.trim()
+      : "Cash App";
+
     const message =
-      `*New Order ${reference}*%0A%0A` +
-      contactBlock +
-      `%0A` +
+      `I would like to complete my payment for an order on Happy Tails Pet Store.%0A%0A` +
+      `Order ID: #${reference}%0A` +
+      `Payment Method: ${paymentMethod}%0A` +
+      `Total: ${subtotal.toFixed(2)}%0A%0A` +
+      `Items:%0A` +
       itemsBlock +
-      `%0A%0A*Total: $${subtotal.toFixed(2)}*`;
+      `%0A%0A` +
+      contactBlock +
+      `%0A%0A` +
+      `Please send me the payment instructions for ${paymentMethod}. Thank you!`;
 
     let deliveryUrl: string;
     if (method === "whatsapp") {
