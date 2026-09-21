@@ -11,7 +11,7 @@ export default function Logo() {
         <PawPrint className="h-5 w-5" />
       </span>
       <span>
-        Happy<span className="text-terracotta-600">Tails</span> Pet Store
+        Floyd <span className="text-terracotta-600">Raphael</span> Pet Store
       </span>
     </Link>
   );
