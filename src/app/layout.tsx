@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
@@ -55,6 +56,12 @@ export default function RootLayout({
           <Footer />
           <CartDrawer />
         </CartProvider>
+        <Script
+          id="tawk-to"
+          strategy="afterInteractive"
+          src="https://embed.tawk.to/6ab25ddb7883ea344035d289/default"
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );
