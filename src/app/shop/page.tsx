@@ -1,4 +1,4 @@
-import { getProducts } from "@/lib/store";
+import { getProducts, getCategories, getSpecies } from "@/lib/store";
 import ShopContent from "./ShopContent";
 
 export const dynamic = "force-dynamic";
@@ -12,14 +12,8 @@ export const metadata = {
 
 export default async function ShopPage() {
   const products = await getProducts();
-  const categories: { slug: string; name: string }[] = [
-    { slug: "dogs", name: "Dogs" },
-    { slug: "cats", name: "Cats" },
-    { slug: "rabbits", name: "Rabbits" },
-    { slug: "birds", name: "Birds" },
-    { slug: "aquatic", name: "Aquatic Animals" },
-    { slug: "reptiles", name: "Reptiles" },
-  ];
+  const categories = await getCategories();
+  const species = await getSpecies();
 
   return (
     <main className="flex-1">
@@ -32,7 +26,7 @@ export default async function ShopPage() {
           </p>
         </div>
       </div>
-      <ShopContent products={products} categories={categories} />
+      <ShopContent products={products} categories={categories} species={species} />
     </main>
   );
 }

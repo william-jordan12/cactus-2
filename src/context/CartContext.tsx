@@ -107,9 +107,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () =>
       items
         .map((i) => {
-          const product =
-            catalog.find((p) => p.slug === i.slug) ??
-            staticProducts.find((p) => p.slug === i.slug);
+          const product = catalog.find((p) => p.slug === i.slug);
           return product ? { product, qty: i.qty } : null;
         })
         .filter((x): x is { product: Product; qty: number } => x !== null),

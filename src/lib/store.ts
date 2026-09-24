@@ -10,6 +10,7 @@ export interface DbProduct {
   slug: string;
   name: string;
   category: Category | string;
+  species: string;
   price: number;
   image: string;
   description: string;
@@ -25,6 +26,7 @@ function mapProduct(row: Record<string, unknown>): Product {
     slug: String(row.slug),
     name: String(row.name),
     category: String(row.category) as Category,
+    species: String(row.species || ""),
     price: Number(row.price),
     image: String(row.image || "/images/placeholder.jpg"),
     images: Array.isArray(row.images) ? row.images.map(String) : [],
@@ -69,7 +71,7 @@ export async function getProducts(): Promise<Product[]> {
   try {
     await initDb();
     const result = await getPool().query(
-      `SELECT slug, name, category, price, image, images, description, details, featured, stock, rating, reviews
+      `SELECT slug, name, category, species, price, image, images, description, details, featured, stock, rating, reviews
        FROM ssv_products ORDER BY featured DESC, name ASC`
     );
     return result.rows.map(mapProduct);
@@ -82,14 +84,41 @@ export async function getProductBySlug(slug: string): Promise<Product | undefine
   try {
     await initDb();
     const result = await getPool().query(
-      `SELECT slug, name, category, price, image, images, description, details, featured, stock, rating, reviews
+      `SELECT slug, name, category, species, price, image, images, description, details, featured, stock, rating, reviews
        FROM ssv_products WHERE slug = $1`,
       [slug]
     );
     const row = result.rows[0];
-    return row ? mapProduct(row) : staticProducts.find((p) => p.slug === slug);
+    return row ? mapProduct(row) : undefined;
   } catch {
     return staticProducts.find((p) => p.slug === slug);
+  }
+}
+
+export interface DbSpecies {
+  slug: string;
+  category: string;
+  name: string;
+}
+
+export async function getSpecies(category?: string): Promise<DbSpecies[]> {
+  try {
+    await initDb();
+    const result = category
+      ? await getPool().query(
+          `SELECT slug, category, name FROM ssv_species WHERE category = $1 ORDER BY name ASC`,
+          [category]
+        )
+      : await getPool().query(
+          `SELECT slug, category, name FROM ssv_species ORDER BY category ASC, name ASC`
+        );
+    return result.rows.map((row) => ({
+      slug: String(row.slug),
+      category: String(row.category),
+      name: String(row.name),
+    }));
+  } catch {
+    return [];
   }
 }
 

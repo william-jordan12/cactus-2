@@ -5,18 +5,21 @@ import { useSearchParams } from "next/navigation";
 import ProductGrid from "@/components/ProductGrid";
 import CategoryBrowser from "@/components/CategoryBrowser";
 import type { Product, Category } from "@/lib/products";
+import type { DbCategory, DbSpecies } from "@/lib/store";
 import { PawPrint } from "lucide-react";
 
 type CategoryKey = Category | "all";
 
-const validKeys: CategoryKey[] = ["all", "dogs", "cats", "rabbits", "birds", "aquatic", "reptiles"];
+const validKeys: CategoryKey[] = ["all", "dogs", "cats", "rabbits", "birds", "aquatic", "reptiles", "monkeys"];
 
 function ShopContentInner({
   products,
   categories,
+  species,
 }: {
   products: Product[];
-  categories: { slug: string; name: string }[];
+  categories: DbCategory[];
+  species: DbSpecies[];
 }) {
   const searchParams = useSearchParams();
   const param = searchParams.get("category");
@@ -32,7 +35,7 @@ function ShopContentInner({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <CategoryBrowser />
+      <CategoryBrowser categories={categories} species={species} products={products} />
 
       <div className="flex flex-wrap items-center gap-3">
         <a
@@ -83,7 +86,8 @@ function ShopContentInner({
 
 export default function ShopContent(props: {
   products: Product[];
-  categories: { slug: string; name: string }[];
+  categories: DbCategory[];
+  species: DbSpecies[];
 }) {
   return (
     <Suspense

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, PawPrint } from "lucide-react";
-import { categories, speciesGroups, getProductBySlug } from "@/lib/products";
-import AnimateOnScroll from "./AnimateOnScroll";
+import type { Product } from "@/lib/products";
+import type { DbCategory, DbSpecies } from "@/lib/store";
 
 const categoryPhotos: Record<string, string> = {
   dogs: "photo-1543466835-00a7907e9de1",
@@ -18,15 +18,21 @@ const categoryPhotos: Record<string, string> = {
 const photoUrl = (id: string) =>
   `https://images.unsplash.com/${id}?w=192&q=75&auto=format&fit=crop`;
 
+interface Props {
+  categories: DbCategory[];
+  species: DbSpecies[];
+  products: Product[];
+}
 
-export default function CategoryBrowser() {
-  const [open, setOpen] = useState<string | null>("dogs");
+export default function CategoryBrowser({ categories, species, products }: Props) {
+  const [open, setOpen] = useState<string | null>(categories[0]?.slug ?? null);
+  const productBySlug = new Map(products.map((p) => [p.slug, p]));
 
   return (
     <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 stagger-children">
       {categories.map((cat) => {
-        const groups = speciesGroups[cat.slug] ?? [];
-        const count = groups.reduce((sum, g) => sum + g.slugs.length, 0);
+        const catSpecies = species.filter((s) => s.category === cat.slug);
+        const count = catSpecies.length;
         const photo = categoryPhotos[cat.slug];
         const isOpen = open === cat.slug;
 
@@ -72,28 +78,21 @@ export default function CategoryBrowser() {
 
             {isOpen && (
               <div className="space-y-4 border-t border-stone-100 bg-stone-50/60 p-5">
-                {groups.map((group) => (
-                  <div key={group.label}>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-sage-600">
-                      {group.label}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {group.slugs.map((slug) => {
-                        const product = getProductBySlug(slug);
-                        if (!product) return null;
-                        return (
-                          <Link
-                            key={slug}
-                            href={`/product/${slug}`}
-                            className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium text-stone-700 transition-colors hover:border-sage-500 hover:text-sage-700"
-                          >
-                            {product.name}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
+                <div className="flex flex-wrap gap-2">
+                  {catSpecies.map((s) => {
+                    const product = productBySlug.get(s.slug);
+                    if (!product) return null;
+                    return (
+                      <Link
+                        key={`${s.category}-${s.slug}`}
+                        href={`/product/${product.slug}`}
+                        className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium text-stone-700 transition-colors hover:border-sage-500 hover:text-sage-700"
+                      >
+                        {product.name}
+                      </Link>
+                    );
+                  })}
+                </div>
 
                 <Link
                   href={`/shop?category=${cat.slug}`}

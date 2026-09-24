@@ -1,6 +1,10 @@
 import { Pool, type PoolClient } from "pg";
 import { env } from "./env";
-import { products as seedProducts, categories as seedCategories } from "./products";
+import {
+  products as seedProducts,
+  categories as seedCategories,
+  speciesGroups as seedSpeciesGroups,
+} from "./products";
 import { hashPassword } from "./password";
 
 declare global {
@@ -60,6 +64,7 @@ const SCHEMA_SQL = [
   )`,
   `ALTER TABLE ssv_products ADD COLUMN IF NOT EXISTS images TEXT[] DEFAULT '{}'`,
   `ALTER TABLE ssv_products ADD COLUMN IF NOT EXISTS is_synced BOOLEAN DEFAULT true`,
+  `ALTER TABLE ssv_products ADD COLUMN IF NOT EXISTS species TEXT DEFAULT ''`,
   `CREATE TABLE IF NOT EXISTS ssv_admins (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,
@@ -111,6 +116,18 @@ const SCHEMA_SQL = [
     helpful INTEGER DEFAULT 0,
     created_at TIMESTAMPTZ DEFAULT now()
   )`,
+  `CREATE TABLE IF NOT EXISTS ssv_species (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    slug TEXT NOT NULL,
+    category TEXT NOT NULL REFERENCES ssv_categories(slug) ON DELETE CASCADE,
+    name TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE (slug, category)
+  )`,
+  `CREATE TABLE IF NOT EXISTS ssv_deleted_products (
+    slug TEXT PRIMARY KEY,
+    deleted_at TIMESTAMPTZ DEFAULT now()
+  )`,
 ];
 
 let initPromise: Promise<void> | null = null;
@@ -126,6 +143,7 @@ export async function initDb(): Promise<void> {
         }
         await seedAdmin(client);
         await seedCategoriesAndProducts(client);
+        await seedSpecies(client);
         await seedSettings(client);
       } finally {
         client.release();
@@ -165,7 +183,10 @@ async function seedSettings(client: PoolClient) {
 
 async function seedCategoriesAndProducts(client: PoolClient) {
   const seedCategorySlugs = seedCategories.map((c) => c.slug);
-  const seedProductSlugs = seedProducts.map((p) => p.slug);
+  const deletedResult = await client.query(`SELECT slug FROM ssv_deleted_products`);
+  const deletedSlugs = new Set(deletedResult.rows.map((r) => r.slug));
+  const activeSeedProducts = seedProducts.filter((p) => !deletedSlugs.has(p.slug));
+  const seedProductSlugs = activeSeedProducts.map((p) => p.slug);
 
   for (const c of seedCategories) {
     await client.query(
@@ -177,7 +198,7 @@ async function seedCategoriesAndProducts(client: PoolClient) {
       [c.slug, c.name, c.description]
     );
   }
-  for (const p of seedProducts) {
+  for (const p of activeSeedProducts) {
     await client.query(
       `INSERT INTO ssv_products (slug, name, category, price, image, description, details, featured, stock, rating, reviews, is_synced)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true)
@@ -201,8 +222,9 @@ async function seedCategoriesAndProducts(client: PoolClient) {
   }
   await client.query(
     `DELETE FROM ssv_products
-     WHERE is_synced = true AND NOT (slug = ANY($1::text[]))`,
-    [seedProductSlugs]
+     WHERE is_synced = true AND NOT (slug = ANY($1::text[]))
+       AND NOT (slug = ANY($2::text[]))`,
+    [seedProductSlugs, [...deletedSlugs]]
   );
   await client.query(
     `DELETE FROM ssv_categories
@@ -210,4 +232,36 @@ async function seedCategoriesAndProducts(client: PoolClient) {
        AND slug NOT IN (SELECT DISTINCT category FROM ssv_products)`,
     [seedCategorySlugs]
   );
+}
+
+async function seedSpecies(client: PoolClient) {
+  const countResult = await client.query(`SELECT COUNT(*) AS n FROM ssv_species`);
+  const count = Number(countResult.rows[0].n);
+  if (count > 0) return;
+
+  const rows: { slug: string; category: string; name: string }[] = [];
+  (Object.entries(seedSpeciesGroups) as [string, { label: string; slugs: string[] }[]][]).forEach(
+    ([category, groups]) => {
+      groups.forEach((group) => {
+        group.slugs.forEach((slug) => {
+          rows.push({
+            slug,
+            category,
+            name: slug
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join(" "),
+          });
+        });
+      });
+    }
+  );
+  for (const s of rows) {
+    await client.query(
+      `INSERT INTO ssv_species (slug, category, name)
+       VALUES ($1, $2, $3)
+       ON CONFLICT (slug, category) DO NOTHING`,
+      [s.slug, s.category, s.name]
+    );
+  }
 }

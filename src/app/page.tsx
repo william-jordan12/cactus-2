@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import CategoryBrowser from "@/components/CategoryBrowser";
 import { SectionHeading } from "@/components/SectionHeading";
-import { getProducts } from "@/lib/store";
+import { getProducts, getCategories, getSpecies } from "@/lib/store";
 import { Heart, ShieldCheck, PackageCheck, MessageCircle, Star, PawPrint } from "lucide-react";
 import AnimateOnScroll from "@/components/AnimateOnScroll";
 import CountUp from "@/components/CountUp";
@@ -12,12 +12,14 @@ export const revalidate = 0;
 
 export default async function Home() {
   const all = await getProducts();
+  const cats = await getCategories();
+  const species = await getSpecies();
 
   return (
     <main className="flex-1">
       <Hero /> 
 
-      <CategoryBrowser />
+      <CategoryBrowser categories={cats} species={species} products={all} />
 
 <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <AnimateOnScroll>

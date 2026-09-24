@@ -10,11 +10,18 @@ import {
   X,
   Save,
 } from "lucide-react";
-import type { Category, Product } from "@/lib/products";import { speciesGroups } from "@/lib/products";
+import type { Category, Product } from "@/lib/products";
+import { speciesGroups } from "@/lib/products";
 import ImageDropzone from "./ImageDropzone";
 
 interface CategoryOpt {
   slug: string;
+  name: string;
+}
+
+interface Species {
+  slug: string;
+  category: string;
   name: string;
 }
 
@@ -53,6 +60,7 @@ const emptyForm: ProductForm = {
 export default function ProductsManager() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<CategoryOpt[]>([]);
+  const [species, setSpecies] = useState<Species[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<ProductForm | null>(null);
   const [saving, setSaving] = useState(false);
@@ -61,12 +69,14 @@ export default function ProductsManager() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [pRes, cRes] = await Promise.all([
+      const [pRes, cRes, sRes] = await Promise.all([
         fetch("/api/products").then((r) => r.json()),
         fetch("/api/categories").then((r) => r.json()),
+        fetch("/api/species").then((r) => r.json()),
       ]);
       setProducts(pRes.products ?? []);
       setCategories(cRes.categories ?? []);
+      setSpecies(sRes.species ?? []);
     } finally {
       setLoading(false);
     }
@@ -75,6 +85,27 @@ export default function ProductsManager() {
   useEffect(() => {
     load();
   }, [load]);
+
+  const speciesForCategory = (category: string): Species[] => {
+    const dbSpecies = species.filter((s) => s.category === category);
+    const dbSlugs = new Set(dbSpecies.map((s) => s.slug));
+    const staticSpecies: Species[] = [];
+    (speciesGroups[category as Category] ?? []).forEach((group) => {
+      group.slugs.forEach((slug) => {
+        if (!dbSlugs.has(slug)) {
+          staticSpecies.push({
+            slug,
+            category,
+            name: slug
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join(" "),
+          });
+        }
+      });
+    });
+    return [...dbSpecies, ...staticSpecies];
+  };
 
   async function handleDelete(slug: string) {
     if (!confirm("Delete this product permanently?")) return;
@@ -298,7 +329,7 @@ export default function ProductsManager() {
                   ))}
                 </select>
               </Field>
-              {speciesGroups[editing.category as Category]?.length > 0 && (
+              {speciesForCategory(editing.category).length > 0 && (
                 <Field label="Species *">
                   <select
                     required
@@ -307,17 +338,10 @@ export default function ProductsManager() {
                     className={inputCls}
                   >
                     <option value="">Select species…</option>
-                    {speciesGroups[editing.category as Category].map((group) => (
-                      <optgroup key={group.label} label={group.label}>
-                        {group.slugs.map((slug) => (
-                          <option key={slug} value={slug}>
-                            {slug
-                              .split("-")
-                              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                              .join(" ")}
-                          </option>
-                        ))}
-                      </optgroup>
+                    {speciesForCategory(editing.category).map((s) => (
+                      <option key={s.slug} value={s.slug}>
+                        {s.name}
+                      </option>
                     ))}
                   </select>
                 </Field>

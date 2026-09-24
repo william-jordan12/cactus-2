@@ -40,20 +40,22 @@ export async function PUT(req: Request, { params }: Params) {
       `UPDATE ssv_products SET
          name = $1,
          category = $2,
-         price = $3,
-         image = $4,
-         images = COALESCE($5::text[], '{}'),
-         description = $6,
-         details = $7,
-         featured = $8,
-         stock = $9,
-         rating = $10,
-         reviews = $11,
+         species = $3,
+         price = $4,
+         image = $5,
+         images = COALESCE($6::text[], '{}'),
+         description = $7,
+         details = $8,
+         featured = $9,
+         stock = $10,
+         rating = $11,
+         reviews = $12,
          updated_at = now()
-       WHERE slug = $12`,
+       WHERE slug = $13`,
       [
         name,
         typeof body.category === "string" ? body.category : "dogs",
+        typeof body.species === "string" ? body.species : "",
         price,
         typeof body.image === "string" ? body.image : "",
         images,
@@ -84,7 +86,12 @@ export async function DELETE(_req: Request, { params }: Params) {
 
     const { slug } = await params;
     const pool = getPool();
+    await pool.query(
+      `INSERT INTO ssv_deleted_products (slug) VALUES ($1) ON CONFLICT (slug) DO NOTHING`,
+      [slug]
+    );
     await pool.query(`DELETE FROM ssv_products WHERE slug = $1`, [slug]);
+    await pool.query(`DELETE FROM ssv_reviews WHERE product_slug = $1`, [slug]);
 
     return NextResponse.json({ ok: true });
   } catch (err) {
