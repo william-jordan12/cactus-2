@@ -1,7 +1,51 @@
 "use client";
 
 import { useState } from "react";
-import { KeyRound, Save, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { KeyRound, Save, AlertTriangle, CheckCircle2, Eye, EyeOff } from "lucide-react";
+
+function PasswordField({
+  id,
+  label,
+  value,
+  onChange,
+  required,
+  placeholder,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  required?: boolean;
+  placeholder?: string;
+}) {
+  const [show, setShow] = useState(false);
+  return (
+    <div>
+      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-stone-700">
+        {label}
+      </label>
+      <div className="relative">
+        <input
+          id={id}
+          type={show ? "text" : "password"}
+          required={required}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="w-full rounded-lg border border-stone-300 px-3 py-2.5 pr-11 text-sm outline-none focus:border-sage-500"
+        />
+        <button
+          type="button"
+          onClick={() => setShow((s) => !s)}
+          aria-label={show ? `Hide ${label}` : `Show ${label}`}
+          className="absolute right-1 top-1/2 -translate-y-1/2 rounded-lg p-2 text-stone-400 transition-colors hover:text-sage-700"
+        >
+          {show ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function ChangePasswordForm() {
   const [current, setCurrent] = useState("");
@@ -73,42 +117,28 @@ export default function ChangePasswordForm() {
         )}
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-stone-700">
-              Current Password
-            </label>
-            <input
-              type="password"
-              required
-              value={current}
-              onChange={(e) => setCurrent(e.target.value)}
-              className="w-full rounded-lg border border-stone-300 px-3 py-2.5 text-sm outline-none focus:border-sage-500"
-            />
-          </div>
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-stone-700">
-              New Password
-            </label>
-            <input
-              type="password"
-              required
-              value={next}
-              onChange={(e) => setNext(e.target.value)}
-              className="w-full rounded-lg border border-stone-300 px-3 py-2.5 text-sm outline-none focus:border-sage-500"
-            />
-          </div>
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-stone-700">
-              Confirm New Password
-            </label>
-            <input
-              type="password"
-              required
-              value={confirm}
-              onChange={(e) => setConfirm(e.target.value)}
-              className="w-full rounded-lg border border-stone-300 px-3 py-2.5 text-sm outline-none focus:border-sage-500"
-            />
-          </div>
+          <PasswordField
+            id="current-password"
+            label="Current Password"
+            value={current}
+            onChange={setCurrent}
+            required
+          />
+          <PasswordField
+            id="new-password"
+            label="New Password"
+            value={next}
+            onChange={setNext}
+            required
+            placeholder="At least 8 characters"
+          />
+          <PasswordField
+            id="confirm-password"
+            label="Confirm New Password"
+            value={confirm}
+            onChange={setConfirm}
+            required
+          />
           <button
             type="submit"
             disabled={saving}

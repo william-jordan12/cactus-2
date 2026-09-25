@@ -4,21 +4,15 @@ import {
   getSessionAdmin,
   createSession,
   setSessionCookie,
-  SESSION_COOKIE,
+  loginAdmin,
 } from "@/lib/auth";
 import { hashPassword, verifyPassword } from "@/lib/password";
-import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
     await initDb();
-    const admin = await getSessionAdmin();
-    if (!admin) {
-      return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
-    }
-
     const body = await req.json();
     const current = typeof body.currentPassword === "string" ? body.currentPassword : "";
     const next = typeof body.newPassword === "string" ? body.newPassword : "";
@@ -28,6 +22,17 @@ export async function POST(req: Request) {
         { error: "New password must be at least 8 characters." },
         { status: 400 }
       );
+    }
+
+    // Accept a valid session, or fall back to verifying the current
+    // admin password directly if the session is missing/stale. This keeps
+    // password changes working even when the stored session was rotated.
+    let admin = await getSessionAdmin();
+    if (!admin) {
+      admin = await loginAdmin("admin", current);
+      if (!admin) {
+        return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+      }
     }
 
     const pool = getPool();
@@ -42,16 +47,11 @@ export async function POST(req: Request) {
 
     const newHash = hashPassword(next);
     await pool.query(
-      `UPDATE ssv_admins SET password_hash = $1, session_token = NULL WHERE id = $2`,
+      `UPDATE ssv_admins SET password_hash = $1 WHERE id = $2`,
       [newHash, admin.id]
     );
 
-    // Rotate session so all other sessions are invalidated.
-    const cookieStore = await cookies();
-    const oldToken = cookieStore.get(SESSION_COOKIE)?.value;
-    if (oldToken) {
-      cookieStore.delete(SESSION_COOKIE);
-    }
+    // Rotate the session (invalidates other sessions) and stay logged in.
     const newToken = await createSession(admin.id);
     await setSessionCookie(newToken);
 

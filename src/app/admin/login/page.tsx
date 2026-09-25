@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, LogIn, User, AlertTriangle } from "lucide-react";
+import { Lock, LogIn, User, AlertTriangle, Eye, EyeOff } from "lucide-react";
 import Logo from "@/components/Logo";
 
 export default function AdminLogin() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -79,14 +80,24 @@ export default function AdminLogin() {
             <label className="mb-2 block text-sm font-medium text-stone-700">
               Password
             </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-stone-300 px-4 py-3 text-stone-900 outline-none focus:border-sage-500"
-              placeholder="••••••••"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-lg border border-stone-300 px-4 py-3 pr-12 text-stone-900 outline-none focus:border-sage-500"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((s) => !s)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                className="absolute right-1 top-1/2 -translate-y-1/2 rounded-lg p-2 text-stone-400 transition-colors hover:text-sage-700"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
           <button
             type="submit"
