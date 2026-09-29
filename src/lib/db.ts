@@ -200,17 +200,20 @@ async function seedCategoriesAndProducts(client: PoolClient) {
   }
   for (const p of activeSeedProducts) {
     await client.query(
-      `INSERT INTO ssv_products (slug, name, category, price, image, description, details, featured, stock, rating, reviews, is_synced)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, true)
+      `INSERT INTO ssv_products (slug, name, category, species, price, image, images, description, details, featured, stock, rating, reviews, is_synced)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, true)
        ON CONFLICT (slug) DO UPDATE SET
          image = CASE WHEN ssv_products.image LIKE '/images/%' THEN EXCLUDED.image ELSE ssv_products.image END,
+         species = COALESCE(NULLIF(EXCLUDED.species, ''), ssv_products.species),
          is_synced = true`,
       [
         p.slug,
         p.name,
         p.category,
+        p.species ?? "",
         p.price,
         p.image,
+        p.images ?? [],
         p.description,
         JSON.stringify(p.details),
         p.featured ?? false,
