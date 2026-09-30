@@ -230,7 +230,7 @@ async function seedCategoriesAndProducts(client: PoolClient) {
       p.reviews,
     ]);
     await client.query(
-      `INSERT INTO ssv_products (slug, name, category, species, price, image, images, description, details, featured, stock, rating, reviews, is_synced)
+      `INSERT INTO ssv_products (slug, name, category, species, price, image, images, description, details, featured, stock, rating, reviews)
        VALUES ${values}
        ON CONFLICT (slug) DO UPDATE SET
          image = CASE WHEN ssv_products.image LIKE '/images/%' THEN EXCLUDED.image ELSE ssv_products.image END,

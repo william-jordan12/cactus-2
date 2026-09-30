@@ -2,6 +2,7 @@ import { getPool, initDb } from "./db";
 import {
   categories as staticCategories,
   products as staticProducts,
+  speciesGroups as staticSpeciesGroups,
   type Category,
   type Product,
 } from "./products";
@@ -101,6 +102,19 @@ export interface DbSpecies {
   name: string;
 }
 
+function staticSpecies(category?: string): DbSpecies[] {
+  const title = (slug: string) =>
+    slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  return Object.entries(staticSpeciesGroups)
+    .filter(([cat]) => !category || cat === category)
+    .flatMap(([cat, groups]) =>
+      groups.flatMap((g) => g.slugs.map((slug) => ({ slug, category: cat, name: title(slug) })))
+    );
+}
+
 export async function getSpecies(category?: string): Promise<DbSpecies[]> {
   try {
     await initDb();
@@ -117,8 +131,11 @@ export async function getSpecies(category?: string): Promise<DbSpecies[]> {
       category: String(row.category),
       name: String(row.name),
     }));
-  } catch {
-    return [];
+  } catch (err) {
+    // Fall back to the bundled species list so category counters never render a
+    // misleading "0 species & breeds" when the database is unreachable.
+    console.error("getSpecies: database unavailable, using static species list", err);
+    return staticSpecies(category);
   }
 }
 
