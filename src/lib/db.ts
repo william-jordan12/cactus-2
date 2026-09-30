@@ -130,12 +130,15 @@ const SCHEMA_SQL = [
   )`,
 ];
 
-let initPromise: Promise<void> | null = null;
+// initDb's result is shared process-wide (globalThis) so every route bundle's
+// copy of this module waits on the SAME initialization instead of re-running
+// the full seed per module instance during a single process lifetime.
+const g = globalThis as unknown as { __ssvDbInit?: Promise<void> };
 
 export async function initDb(): Promise<void> {
   if (!env.databaseUrl) return;
-  if (!initPromise) {
-    initPromise = (async () => {
+  if (!g.__ssvDbInit) {
+    g.__ssvDbInit = (async () => {
       const client = await getPool().connect();
       try {
         for (const sql of SCHEMA_SQL) {
@@ -150,7 +153,7 @@ export async function initDb(): Promise<void> {
       }
     })();
   }
-  return initPromise;
+  return g.__ssvDbInit;
 }
 
 async function seedAdmin(client: PoolClient) {
@@ -188,39 +191,52 @@ async function seedCategoriesAndProducts(client: PoolClient) {
   const activeSeedProducts = seedProducts.filter((p) => !deletedSlugs.has(p.slug));
   const seedProductSlugs = activeSeedProducts.map((p) => p.slug);
 
-  for (const c of seedCategories) {
+  if (seedCategories.length > 0) {
     await client.query(
       `INSERT INTO ssv_categories (slug, name, description)
-       VALUES ($1, $2, $3)
+       SELECT * FROM unnest($1::text[], $2::text[], $3::text[])
        ON CONFLICT (slug) DO UPDATE SET
          name = EXCLUDED.name,
          description = EXCLUDED.description`,
-      [c.slug, c.name, c.description]
+      [
+        seedCategories.map((c) => c.slug),
+        seedCategories.map((c) => c.name),
+        seedCategories.map((c) => c.description),
+      ]
     );
   }
-  for (const p of activeSeedProducts) {
+
+  if (activeSeedProducts.length > 0) {
+    const nCols = 13;
+    const values = activeSeedProducts
+      .map((_, i) => {
+        const b = i * nCols;
+        return `(${Array.from({ length: nCols }, (_, k) => `$${b + k + 1}`).join(",")})`;
+      })
+      .join(",");
+    const flatParams = activeSeedProducts.flatMap((p) => [
+      p.slug,
+      p.name,
+      p.category,
+      p.species ?? "",
+      p.price,
+      p.image,
+      p.images ?? [],
+      p.description,
+      JSON.stringify(p.details),
+      p.featured ?? false,
+      p.stock,
+      p.rating,
+      p.reviews,
+    ]);
     await client.query(
       `INSERT INTO ssv_products (slug, name, category, species, price, image, images, description, details, featured, stock, rating, reviews, is_synced)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, true)
+       VALUES ${values}
        ON CONFLICT (slug) DO UPDATE SET
          image = CASE WHEN ssv_products.image LIKE '/images/%' THEN EXCLUDED.image ELSE ssv_products.image END,
          species = COALESCE(NULLIF(EXCLUDED.species, ''), ssv_products.species),
          is_synced = true`,
-      [
-        p.slug,
-        p.name,
-        p.category,
-        p.species ?? "",
-        p.price,
-        p.image,
-        p.images ?? [],
-        p.description,
-        JSON.stringify(p.details),
-        p.featured ?? false,
-        p.stock,
-        p.rating,
-        p.reviews,
-      ]
+      flatParams
     );
   }
   await client.query(
@@ -259,12 +275,19 @@ async function seedSpecies(client: PoolClient) {
       });
     }
   );
-  for (const s of rows) {
+  if (rows.length > 0) {
+    const nCols = 3;
+    const values = rows
+      .map((_, i) => {
+        const b = i * nCols;
+        return `(${Array.from({ length: nCols }, (_, k) => `$${b + k + 1}`).join(",")})`;
+      })
+      .join(",");
     await client.query(
       `INSERT INTO ssv_species (slug, category, name)
-       VALUES ($1, $2, $3)
+       VALUES ${values}
        ON CONFLICT (slug, category) DO NOTHING`,
-      [s.slug, s.category, s.name]
+      rows.flatMap((s) => [s.slug, s.category, s.name])
     );
   }
 }
