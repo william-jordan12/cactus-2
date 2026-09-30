@@ -63,6 +63,7 @@ export default function ProductView({
               name={product.name}
               image={gallery[active] || product.image}
               className="aspect-square w-full"
+              width={1200}
             />
           </div>
 
@@ -83,6 +84,7 @@ export default function ProductView({
                     name={product.name}
                     image={img}
                     className="h-full w-full"
+                    width={240}
                   />
                 </button>
               ))}

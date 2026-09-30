@@ -395,6 +395,7 @@ export default function CheckoutPage() {
                         name={product.name}
                         image={product.image}
                         className="h-full w-full"
+                        width={200}
                       />
                     </div>
                     <div className="flex-1">

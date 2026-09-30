@@ -1,8 +1,11 @@
+import { cloudinaryDeliveryUrl } from "@/lib/cloudinary";
+
 interface ProductImageProps {
   category: string;
   name: string;
   image?: string;
   className?: string;
+  width?: number;
 }
 
 const categoryColors: Record<string, { bg: string; accent: string; label: string }> = {
@@ -19,12 +22,15 @@ export default function ProductImage({
   name,
   image,
   className = "",
+  width,
 }: ProductImageProps) {
-  if (image) {
+  const src = cloudinaryDeliveryUrl(image, { width });
+
+  if (src) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={image}
+        src={src}
         alt={name}
         loading="lazy"
         className={`object-cover ${className}`}

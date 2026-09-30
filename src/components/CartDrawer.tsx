@@ -65,6 +65,7 @@ export default function CartDrawer() {
                         name={product.name}
                         image={product.image}
                         className="h-full w-full"
+                        width={240}
                       />
                       <span className="absolute inset-x-0 bottom-0 bg-stone-900/60 px-1.5 py-0.5 text-center text-[9px] font-bold uppercase tracking-wider text-white">
                         {product.category.toUpperCase()}
