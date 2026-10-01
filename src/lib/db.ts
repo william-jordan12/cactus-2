@@ -124,6 +124,7 @@ const SCHEMA_SQL = [
     created_at TIMESTAMPTZ DEFAULT now(),
     UNIQUE (slug, category)
   )`,
+  `ALTER TABLE ssv_species ADD COLUMN IF NOT EXISTS is_synced BOOLEAN DEFAULT true`,
   `CREATE TABLE IF NOT EXISTS ssv_deleted_products (
     slug TEXT PRIMARY KEY,
     deleted_at TIMESTAMPTZ DEFAULT now()
@@ -254,10 +255,6 @@ async function seedCategoriesAndProducts(client: PoolClient) {
 }
 
 async function seedSpecies(client: PoolClient) {
-  const countResult = await client.query(`SELECT COUNT(*) AS n FROM ssv_species`);
-  const count = Number(countResult.rows[0].n);
-  if (count > 0) return;
-
   const rows: { slug: string; category: string; name: string }[] = [];
   (Object.entries(seedSpeciesGroups) as [string, { label: string; slugs: string[] }[]][]).forEach(
     ([category, groups]) => {
@@ -275,19 +272,33 @@ async function seedSpecies(client: PoolClient) {
       });
     }
   );
+
   if (rows.length > 0) {
     const nCols = 3;
     const values = rows
       .map((_, i) => {
         const b = i * nCols;
-        return `(${Array.from({ length: nCols }, (_, k) => `$${b + k + 1}`).join(",")})`;
+        return `(${Array.from({ length: nCols }, (_, k) => `$${b + k + 1}`).join(",")}, true)`;
       })
       .join(",");
+    // Reconciles on every boot (not just an empty table) so species removed from
+    // speciesGroups are dropped and new ones appear, while admin-added species
+    // (is_synced = false) are never touched.
     await client.query(
-      `INSERT INTO ssv_species (slug, category, name)
+      `INSERT INTO ssv_species (slug, category, name, is_synced)
        VALUES ${values}
-       ON CONFLICT (slug, category) DO NOTHING`,
+       ON CONFLICT (slug, category) DO UPDATE SET
+         name = EXCLUDED.name,
+         is_synced = true`,
       rows.flatMap((s) => [s.slug, s.category, s.name])
+    );
+
+    const seedKeys = rows.map((r) => `${r.category}:${r.slug}`);
+    await client.query(
+      `DELETE FROM ssv_species
+       WHERE is_synced = true
+         AND NOT ((category || ':' || slug) = ANY($1::text[]))`,
+      [seedKeys]
     );
   }
 }

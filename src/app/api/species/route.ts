@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     }
 
     await pool.query(
-      `INSERT INTO ssv_species (slug, category, name) VALUES ($1, $2, $3)`,
+      `INSERT INTO ssv_species (slug, category, name, is_synced) VALUES ($1, $2, $3, false)`,
       [slug, category, name]
     );
 
